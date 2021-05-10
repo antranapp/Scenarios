@@ -57,6 +57,9 @@ open class ScenariosManager {
         ),
     ]
 
+    // Note: Hold onto the plugins to keep them in memory.
+    private let plugins: [ScenarioPlugin]
+
     // MARK: Public APIs
 
     public init(
@@ -64,9 +67,10 @@ open class ScenariosManager {
         plugins: [ScenarioPlugin] = []
     ) {
         self.targetAudience = targetAudience
+        self.plugins = plugins
         UIApplication.shared.shortcutItems = shortcuts.map(\.item)
         
-        plugins.forEach { $0.register() }
+        self.plugins.forEach { $0.register() }
 
         updateShortcuts()
 
