@@ -146,7 +146,7 @@ private struct ConfigurationSelectionView<Configuration: Identifiable & CustomSt
                     }
                 }
             }
-            .navigationTitle("Select a configuration")
+            .navigationBarTitle("Select a configuration")
         }
     }
 }

@@ -65,7 +65,11 @@ class ScenarioSelectorAppController: RootViewProviding {
         case .nestedList:
             viewController = ScenarioSeletorNestedListViewController(title: "Scenarios", sections: sections)
         case .outlineList:
-            viewController = ScenarioSeletorOutlineListViewController(title: "Scenarios", sections: sections)
+            if #available(iOS 14, *) {
+                viewController = ScenarioSeletorOutlineListViewController(title: "Scenarios", sections: sections)
+            } else {
+                viewController = ScenarioSeletorNestedListViewController(title: "Scenarios", sections: sections)
+            }
         }
         (rootViewController as? UINavigationController)?.pushViewController(viewController, animated: false)
     }
@@ -132,6 +136,8 @@ class ScenarioSelectorAppController: RootViewProviding {
 }
 
 class ScenarioSeletorNestedListViewController: ListViewController {}
+
+@available(iOS 14, *)
 class ScenarioSeletorOutlineListViewController: CollectionViewController {}
 
 private extension ListSection {
