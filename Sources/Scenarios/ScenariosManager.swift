@@ -10,7 +10,8 @@ open class ScenariosManager {
     // MARK: Properties
 
     public static let activeScenarioDefaultKey = "activeScenario"
-    public static let scenarioListLayoutKey = "scenarioListLayout"
+    public static let favouriteScenarioDefaultKey = "favouriteScenarios"
+    public static let scenarioListLayoutDefaultKey = "scenarioListLayout"
     public static let interfaceStyleDefaultKey = "interfaceStyle"
     public static let disableAnimations = "disable_animations"
     public static let disableHardwareKeyboard = "disable_hardware_keyboard"
@@ -20,6 +21,11 @@ open class ScenariosManager {
     private let targetAudience: Audience?
     private var cancellables = Set<AnyCancellable>()
 
+    @UserDefault(ScenariosManager.favouriteScenarioDefaultKey, defaultValue: [ScenarioId]())
+    private var defaultFavouriteScenarios: [ScenarioId]
+    
+    @Published private var favouriteScenarios: [ScenarioId]
+
     @UserDefault(ScenariosManager.activeScenarioDefaultKey)
     private var activeScenarioId: ScenarioId? {
         didSet {
@@ -27,7 +33,7 @@ open class ScenariosManager {
         }
     }
 
-    @UserDefault<ScenarioListLayout>("scenarioListLayout", defaultValue: .nestedList)
+    @UserDefault(ScenariosManager.scenarioListLayoutDefaultKey, defaultValue: .nestedList)
     private var scenarioListLayout: ScenarioListLayout {
         didSet {
             updateContent()
@@ -56,7 +62,7 @@ open class ScenariosManager {
             }
         ),
     ]
-
+    
     // Note: Hold onto the plugins to keep them in memory.
     private let plugins: [ScenarioPlugin]
 
@@ -68,6 +74,11 @@ open class ScenariosManager {
     ) {
         self.targetAudience = targetAudience
         self.plugins = plugins
+        favouriteScenarios = UserDefaults.standard.object(
+            for: ScenariosManager.favouriteScenarioDefaultKey,
+            defaultValue: [ScenarioId]()
+        )
+        
         UIApplication.shared.shortcutItems = shortcuts.map(\.item)
         
         self.plugins.forEach { $0.register() }
@@ -140,24 +151,34 @@ open class ScenariosManager {
     }
 
     private func setupBindings() {
-        NotificationCenter.default
+        let notificationCenter = NotificationCenter.default
+        notificationCenter
             .publisher(for: .resetScenario)
             .sink { _ in
                 self.reset()
             }
             .store(in: &cancellables)
 
-        NotificationCenter.default
+        notificationCenter
             .publisher(for: .refreshScenario)
             .sink { _ in
                 self.refresh()
             }
             .store(in: &cancellables)
 
-        NotificationCenter.default
+        notificationCenter
             .publisher(for: .switchLayout)
             .sink { _ in
                 self.switchLayout()
+            }
+            .store(in: &cancellables)
+        
+        notificationCenter
+            .publisher(for: .toggleFavourite)
+            .sink { notification in
+                if let scenarioId = notification.object as? ScenarioId {
+                    self.toggleFavourite(scenarioId)
+                }
             }
             .store(in: &cancellables)
     }
@@ -170,6 +191,7 @@ open class ScenariosManager {
             appController.content = nil
             appController.content = ScenarioSelectorAppController(
                 targetAudience: targetAudience,
+                favouriteScenarios: $favouriteScenarios.eraseToAnyPublisher(),
                 layout: scenarioListLayout
             ) { [weak self] id in
                 self?.activeScenarioId = id
@@ -198,6 +220,14 @@ open class ScenariosManager {
             scenarioListLayout = .outlineList
         case .outlineList:
             scenarioListLayout = .nestedList
+        }
+    }
+    
+    private func toggleFavourite(_ scenarioId: ScenarioId) {
+        if let index = favouriteScenarios.firstIndex(of: scenarioId) {
+            favouriteScenarios.remove(at: index)
+        } else {
+            favouriteScenarios.append(scenarioId)
         }
     }
 }

@@ -6,7 +6,7 @@ import Foundation
 import ObjectiveC
 import SwiftUI
 
-public struct ScenarioId: CaseIterable, Hashable, Identifiable, RawRepresentable {
+public struct ScenarioId: CaseIterable, Hashable, Identifiable, RawRepresentable, Codable {
 
     public var scenarioType: Scenario.Type
 
@@ -53,7 +53,6 @@ public struct ScenarioId: CaseIterable, Hashable, Identifiable, RawRepresentable
 
 }
 
-// TODO: Change to struct and use ExpressibleByStringLiteral
 public protocol ScenarioCategory {
     var id: String { get }
     var name: String { get }

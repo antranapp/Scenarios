@@ -48,4 +48,12 @@ extension UIView {
         ])
     }
 
+    func addCenterSubview(_ subview: UIView) {
+        addAutolayoutSubview(subview)
+        
+        NSLayoutConstraint.activate([
+            subview.centerXAnchor.constraint(equalTo: centerXAnchor),
+            subview.centerYAnchor.constraint(equalTo: centerYAnchor),
+        ])
+    }
 }

@@ -5,5 +5,5 @@
 import Foundation
 
 public extension ScenarioKind {
-    static let feature: ScenarioKind = "Feature"
+    @objc static let feature: ScenarioKind = "Feature"
 }

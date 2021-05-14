@@ -6,60 +6,63 @@ import Combine
 import UIKit
 
 class ScenarioSelectorAppController: RootViewProviding {
-    
-    enum State {
-        case starting
-        case ready
-    }
 
     let rootViewController: UIViewController
     
-    @Published private var state: State = .starting
+    private var cancellables = Set<AnyCancellable>()
+    @Published private var sections = [ListSection]()
     
-    private var cancellable: AnyCancellable?
-    private var sections = [ListSection]()
-    
-    private var plugins = [ScenarioPlugin]()
     private var layout: ScenarioListLayout
     private var targetAudience: Audience?
+    private var favouriteScenarios: AnyPublisher<[ScenarioId], Never>
+    
+    private var content: UIViewController? {
+        didSet {
+            oldValue?.remove()
+            if let content = content {
+                (rootViewController as! UINavigationController).viewControllers = [content]
+                UIAccessibility.post(notification: .screenChanged, argument: nil)
+            }
+        }
+    }
     
     // MARK: Initilizer
     
     init(
         targetAudience: Audience?,
+        favouriteScenarios: AnyPublisher<[ScenarioId], Never>,
         layout: ScenarioListLayout,
         select: @escaping (ScenarioId) -> Void
     ) {
         self.targetAudience = targetAudience
         self.layout = layout
+        self.favouriteScenarios = favouriteScenarios
         
         let navigationController = UINavigationController()
         rootViewController = navigationController
         navigationController.navigationBar.prefersLargeTitles = true
 
-        sections = makeSections(select: select)
-        
-        setupBindings()
+        setupBindings(select: select)
     }
     
     // MARK: Private helpers
     
-    private func setupBindings() {
-        cancellable = $state.sink { [weak self] state in
-            self?.updateContent(for: state)
-        }
+    private func setupBindings(select: @escaping (ScenarioId) -> Void) {
+        $sections
+            .sink { [weak self] sections in
+                self?.content = self?.makeScenarioViewController(with: sections)
+            }
+            .store(in: &cancellables)
+
+        favouriteScenarios
+            .sink { [weak self] scenarioIds in
+                guard let self = self else { return }
+                self.sections = self.makeSections(select: select, favouriteScenarios: scenarioIds)
+            }
+            .store(in: &cancellables)
     }
-    
-    private func updateContent(for newState: State) {
-        switch newState {
-        case .starting:
-            state = .ready
-        case .ready:
-            pushScenarioViewController()
-        }
-    }
-    
-    private func pushScenarioViewController() {
+        
+    private func makeScenarioViewController(with sections: [ListSection]) -> UIViewController {
         let viewController: UIViewController
         switch layout {
         case .nestedList:
@@ -71,7 +74,7 @@ class ScenarioSelectorAppController: RootViewProviding {
                 viewController = ScenarioSeletorNestedListViewController(title: "Scenarios", sections: sections)
             }
         }
-        (rootViewController as? UINavigationController)?.pushViewController(viewController, animated: false)
+        return viewController
     }
 
     private func showInfo(_ info: ScenarioInfo) {
@@ -98,7 +101,10 @@ class ScenarioSelectorAppController: RootViewProviding {
         )
     }
     
-    private func makeSections(select: @escaping (ScenarioId) -> Void) -> [ListSection] {
+    private func makeSections(
+        select: @escaping (ScenarioId) -> Void,
+        favouriteScenarios: [ScenarioId]
+    ) -> [ListSection] {
         let sections = ScenarioKind.allCases
             .sorted { $0.nameForSorting < $1.nameForSorting }
             .compactMap {
@@ -111,7 +117,7 @@ class ScenarioSelectorAppController: RootViewProviding {
             }
             .filter { !$0.rows.isEmpty }
                 
-        let groupedSections = sections.map { section -> ListSection in
+        var groupedSections = sections.map { section -> ListSection in
             var newRows = [ListRow]()
             // Merge category row
             for row in section.rows {
@@ -131,7 +137,41 @@ class ScenarioSelectorAppController: RootViewProviding {
             
             return ListSection(id: section.id, title: section.title, rows: newRows)
         }
+        
+        // Insert the favourite section
+        if let favouriteSection = makeFavouriteSection(select: select, favouriteScenarios: favouriteScenarios) {
+            groupedSections.insert(favouriteSection, at: 0)
+        }
+        
         return groupedSections
+    }
+    
+    private func makeFavouriteSection(
+        select: @escaping (ScenarioId) -> Void,
+        favouriteScenarios: [ScenarioId]
+    ) -> ListSection? {
+        guard !favouriteScenarios.isEmpty else {
+            return nil
+        }
+        
+        let rows = ScenarioId.allCases
+            .filter { favouriteScenarios.contains($0) }
+            .map {
+                ListRow(
+                    scenarioId: $0,
+                    select: select,
+                    showInfo: { [weak self] info in self?.showInfo(info) }
+                )
+            }
+        
+        guard !rows.isEmpty else {
+            return nil
+        }
+        
+        return ListSection(
+            title: "⭐️ Favourites",
+            rows: rows
+        )
     }
 }
 
@@ -154,8 +194,12 @@ private extension ListSection {
                 ($0.scenarioType as? AudienceTargetable.Type)?.canDisplay(for: targetAudience) ?? true
             }
             .sorted { $0.scenarioType.nameForSorting < $1.scenarioType.nameForSorting }
-            .map { id -> ListRow in
-                ListRow(id: id, select: select, showInfo: showInfo)
+            .map {
+                ListRow(
+                    scenarioId: $0,
+                    select: select,
+                    showInfo: showInfo
+                )
             }
         
         guard !rows.isEmpty else {
@@ -169,43 +213,100 @@ private extension ListSection {
 
 private extension ListRow {
     init(
-        id: ScenarioId,
+        scenarioId: ScenarioId,
         select: @escaping (ScenarioId) -> Void,
         showInfo: @escaping (ScenarioInfo) -> Void
     ) {
-        let infoAction: (() -> Void)? = id.scenarioType.info.map { info in
+        let infoAction: (() -> Void)? = scenarioId.scenarioType.info.map { info in
             { showInfo(info) }
         }
         
-        var currentRow = ListRow(
-            title: id.scenarioType.name,
-            description: id.scenarioType.shortDescription,
+        var currentRow = ListRow( // The original scenario row
+            scenarioId: scenarioId,
+            title: scenarioId.scenarioType.name,
+            description: scenarioId.scenarioType.shortDescription,
             infoAction: infoAction
-        ) { select(id) }
+        ) { select(scenarioId) }
 
-        if let category = id.scenarioType.category {
-            if let subCategory = id.scenarioType.subCategory {
-                currentRow = ListRow(
+        if let category = scenarioId.scenarioType.category {
+            if let subCategory = scenarioId.scenarioType.subCategory {
+                currentRow = ListRow( // The subcategory row
                     id: subCategory.id,
+                    scenarioId: nil,
                     title: subCategory.name,
                     action: {},
                     subRows: [currentRow]
                 )
             }
 
-            self.init(
+            self.init( // The category row
                 id: category.id,
+                scenarioId: nil,
                 title: category.name,
                 infoAction: nil,
                 action: {},
                 subRows: [currentRow]
             )
         } else {
-            self.init(
-                title: id.scenarioType.name,
-                description: id.scenarioType.shortDescription,
-                infoAction: infoAction
-            ) { select(id) }
+            self = currentRow
         }
+    }
+}
+
+extension ListViewController {
+    
+    private func toggleFavourite(_ scenarioId: ScenarioId, isPinning: Bool = true) {
+        NotificationCenter.default.post(name: .toggleFavourite, object: scenarioId)
+    }
+    
+    override func tableView(
+        _ tableView: UITableView,
+        contextMenuConfigurationForRowAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        guard let scenarioId = self.scenarioId(at: indexPath) else {
+            return nil
+        }
+        
+        let isPinning = indexPath.section != 0 // adding to favourites when users are not selecting row in Favourite section.
+        let action = isPinning ? "Add to favourites" : "Remove from favourites"
+        let icon = isPinning ? "star.fill" : "star"
+        
+        return UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil,
+            actionProvider: { suggestedActions in
+                let pinAction =
+                    UIAction(
+                        title: NSLocalizedString(action, comment: ""),
+                        image: UIImage(systemName: icon)
+                    ) { action in
+                        self.toggleFavourite(
+                            scenarioId,
+                            isPinning: isPinning
+                        )
+                    }
+                return UIMenu(title: "Actions", children: [pinAction])
+            }
+        )
+    }
+}
+
+private final class LoadingViewController: UIViewController {
+    private lazy var activityIndicator = UIActivityIndicatorView(style: .large)
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.addCenterSubview(activityIndicator)
     }
 }

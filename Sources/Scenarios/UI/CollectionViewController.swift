@@ -165,7 +165,7 @@ extension CollectionViewController {
         dataSource.apply(snapshot, animatingDifferences: false)
         for section in sections {
             var sectionSnapshot = NSDiffableDataSourceSectionSnapshot<ListRow>()
-            let headerItem = ListRow(title: section.title, action: {})
+            let headerItem = ListRow(scenarioId: nil, title: section.title, action: {})
             sectionSnapshot.append([headerItem])
             sectionSnapshot.add(rows: section.rows, to: headerItem)
             sectionSnapshot.expand([headerItem])
@@ -220,7 +220,7 @@ extension NSDiffableDataSourceSectionSnapshot {
 }
 
 @available(iOS 14, *)
-extension Array where Element == ListRow {
+private extension Array where Element == ListRow {
     func flatten() -> [Element] {
         var result = [Element]()
             

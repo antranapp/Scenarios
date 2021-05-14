@@ -5,12 +5,12 @@
 import Foundation
 
 @propertyWrapper
-public struct UserDefault<Value> {
+struct UserDefault<Value> {
 
     private let get: () -> Value
     private let set: (Value) -> Void
 
-    public var wrappedValue: Value {
+    var wrappedValue: Value {
         get {
             get()
         }
@@ -19,12 +19,12 @@ public struct UserDefault<Value> {
         }
     }
 
-    public var projectedValue: UserDefault<Value> {
+    var projectedValue: UserDefault<Value> {
         self
     }
 }
 
-public extension UserDefault {
+extension UserDefault {
 
     init(_ key: String, defaultValue: Value, userDefaults: UserDefaults = .standard) {
         get = { userDefaults[key: key] ?? defaultValue }
@@ -33,7 +33,7 @@ public extension UserDefault {
 
 }
 
-public extension UserDefault {
+extension UserDefault {
 
     init<T>(_ key: String, userDefaults: UserDefaults = .standard) where Value == T? {
         get = { userDefaults[key: key] }
@@ -42,7 +42,7 @@ public extension UserDefault {
 
 }
 
-public extension UserDefault where Value: RawRepresentable {
+extension UserDefault where Value: RawRepresentable {
 
     init(_ key: String, defaultValue: Value, userDefaults: UserDefaults = .standard) {
         get = { userDefaults[rawValueKey: key] ?? defaultValue }
@@ -51,10 +51,19 @@ public extension UserDefault where Value: RawRepresentable {
 
 }
 
-public extension UserDefault {
+extension UserDefault {
 
     init<T: RawRepresentable>(_ key: String, userDefaults: UserDefaults = .standard) where Value == T? {
         get = { userDefaults[rawValueKey: key] }
+        set = { userDefaults[rawValueKey: key] = $0 }
+    }
+
+}
+
+extension UserDefault where Value: Codable {
+
+    init(_ key: String, defaultValue: Value, userDefaults: UserDefaults = .standard) {
+        get = { userDefaults[rawValueKey: key] ?? defaultValue }
         set = { userDefaults[rawValueKey: key] = $0 }
     }
 
@@ -81,4 +90,26 @@ private extension UserDefaults {
         }
     }
 
+    subscript<Value: Codable>(rawValueKey key: String) -> Value? {
+        get {
+            if let encodedValue = object(forKey: key) as? Data,
+               let value = try? JSONDecoder().decode(Value.self, from: encodedValue)
+            {
+                return value
+            }
+            
+            return nil
+
+        }
+        set {
+            let encodedValue = try? JSONEncoder().encode(newValue)
+            setValue(encodedValue, forKey: key)
+        }
+    }
+}
+
+extension UserDefaults {
+    func object<Value: Codable>(for key: String, defaultValue: Value) -> Value {
+        self[rawValueKey: key] ?? defaultValue
+    }
 }

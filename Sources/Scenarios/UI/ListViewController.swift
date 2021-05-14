@@ -7,16 +7,19 @@ import UIKit
 struct ListRow: Hashable {
     private var identifier = UUID()
     
-    var id: String
-    var title: String
-    var description: String?
-    var infoAction: (() -> Void)?
-    var action: () -> Void
+    let id: String
+    let title: String
+    let description: String?
+    let infoAction: (() -> Void)?
+    let action: () -> Void
+    
+    let scenarioId: ScenarioId?
     
     var subRows: [ListRow]
 
     init(
         id: String = UUID().uuidString,
+        scenarioId: ScenarioId?,
         title: String,
         description: String? = nil,
         infoAction: (() -> Void)? = nil,
@@ -24,6 +27,7 @@ struct ListRow: Hashable {
         subRows: [ListRow] = []
     ) {
         self.id = id
+        self.scenarioId = scenarioId
         self.title = title
         self.description = description
         self.infoAction = infoAction
@@ -88,6 +92,11 @@ class ListViewController: UITableViewController {
             action: #selector(didSwitchLayout)
         )
         navigationItem.rightBarButtonItem = switchLayoutButton
+    }
+    
+    func scenarioId(at indexPath: IndexPath) -> ScenarioId? {
+        print(sections[indexPath.section].rows[indexPath.row])
+        return sections[indexPath.section].rows[indexPath.row].scenarioId
     }
     
     @objc private func didSwitchLayout() {
@@ -158,7 +167,7 @@ class ListViewController: UITableViewController {
             navigationController?.pushViewController(childListViewController, animated: true)
         }
     }
-
+    
     private func row(at indexPath: IndexPath) -> ListRow {
         if isFiltering {
             return filteredRows[indexPath.row]
