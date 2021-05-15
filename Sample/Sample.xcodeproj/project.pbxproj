@@ -19,9 +19,8 @@
 		7F343ED7265080AC002DC440 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F343EC126507FCF002DC440 /* Assets.xcassets */; };
 		7F343EDE265080E8002DC440 /* InternalAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EDD265080E8002DC440 /* InternalAppDelegate.swift */; };
 		7F343EE0265080EF002DC440 /* ProductionAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EDF265080EF002DC440 /* ProductionAppDelegate.swift */; };
-		7F343EE32650816C002DC440 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EE22650816C002DC440 /* AppController.swift */; };
-		7F343EE42650816C002DC440 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EE22650816C002DC440 /* AppController.swift */; };
 		7F343EEE26508414002DC440 /* Scenarios in Frameworks */ = {isa = PBXBuildFile; productRef = 7F343EED26508414002DC440 /* Scenarios */; };
+		7F343EF426508FE3002DC440 /* HomeViewScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EF326508FE3002DC440 /* HomeViewScenario.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +35,8 @@
 		7F343EDC265080AC002DC440 /* Info-Internal.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Internal.plist"; sourceTree = "<group>"; };
 		7F343EDD265080E8002DC440 /* InternalAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalAppDelegate.swift; sourceTree = "<group>"; };
 		7F343EDF265080EF002DC440 /* ProductionAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductionAppDelegate.swift; sourceTree = "<group>"; };
-		7F343EE22650816C002DC440 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		7F343EEB265083CD002DC440 /* Scenarios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scenarios; path = ..; sourceTree = "<group>"; };
+		7F343EF326508FE3002DC440 /* HomeViewScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScenario.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,11 +98,9 @@
 		7F343EE7265081A8002DC440 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				7F343EBB26507FCD002DC440 /* BaseAppDelegate.swift */,
-				7F343EDD265080E8002DC440 /* InternalAppDelegate.swift */,
-				7F343EDF265080EF002DC440 /* ProductionAppDelegate.swift */,
-				7F343EBF26507FCD002DC440 /* HomeView.swift */,
-				7F343EE22650816C002DC440 /* AppController.swift */,
+				7F343EF126508FC7002DC440 /* Common */,
+				7F343EF226508FCB002DC440 /* Production */,
+				7F343EF026508FC1002DC440 /* Internal */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -124,6 +121,32 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F343EF026508FC1002DC440 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				7F343EDD265080E8002DC440 /* InternalAppDelegate.swift */,
+				7F343EF326508FE3002DC440 /* HomeViewScenario.swift */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		7F343EF126508FC7002DC440 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7F343EBF26507FCD002DC440 /* HomeView.swift */,
+				7F343EBB26507FCD002DC440 /* BaseAppDelegate.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		7F343EF226508FCB002DC440 /* Production */ = {
+			isa = PBXGroup;
+			children = (
+				7F343EDF265080EF002DC440 /* ProductionAppDelegate.swift */,
+			);
+			path = Production;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,7 +253,6 @@
 				7F343EE0265080EF002DC440 /* ProductionAppDelegate.swift in Sources */,
 				7F343EBC26507FCD002DC440 /* BaseAppDelegate.swift in Sources */,
 				7F343EC026507FCD002DC440 /* HomeView.swift in Sources */,
-				7F343EE32650816C002DC440 /* AppController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,9 +261,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F343EDE265080E8002DC440 /* InternalAppDelegate.swift in Sources */,
+				7F343EF426508FE3002DC440 /* HomeViewScenario.swift in Sources */,
 				7F343ED1265080AC002DC440 /* BaseAppDelegate.swift in Sources */,
 				7F343ED2265080AC002DC440 /* HomeView.swift in Sources */,
-				7F343EE42650816C002DC440 /* AppController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +414,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.antran.scenarios.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -413,7 +435,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.antran.scenarios.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -434,7 +456,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.antran.scenarios.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -455,7 +477,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = app.antran.scenarios.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
