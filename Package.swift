@@ -16,13 +16,11 @@ let package = Package(
     targets: [
         .target(
             name: "Scenarios",
-            dependencies: [],
-            path: "Packages/Sources"
+            dependencies: []
         ),
         .testTarget(
             name: "ScenariosTests",
-            dependencies: ["Scenarios"],
-            path: "Packages/Tests"
+            dependencies: ["Scenarios"]
         ),
     ]
 )
