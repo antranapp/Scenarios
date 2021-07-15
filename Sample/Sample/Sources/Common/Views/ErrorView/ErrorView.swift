@@ -7,13 +7,20 @@ import SwiftUI
 struct ErrorView: View {
     
     var errorText: String
+    var multipleLines: Bool = false
     
     var body: some View {
         VStack {
             Text(self.errorText)
+                .if(multipleLines, transform: { view in
+                    view.lineLimit(nil)
+                })
+                .if(!multipleLines, transform: { view in
+                    view.lineLimit(1)
+                })
                 .font(.headline)
-                .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: 45, idealHeight: 45, maxHeight: 45, alignment: .leading)
-                .padding(.init(top: 0, leading: 5, bottom: 0, trailing: 5))
+                .padding()
+                .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, alignment: .leading)
                 .foregroundColor(Color.white)
                 .background(Color.red)
                 .animation(.easeIn)

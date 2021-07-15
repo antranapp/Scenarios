@@ -4,12 +4,12 @@
 
 import Foundation
 
-protocol NetworkManagerProtocol {
-    func request<T: Decodable>(urlRequestObject: URLRequest, completion: @escaping (Result<T, Error>) -> Void)
+protocol NetworkClientProtocol {
+    func perform<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, Error>) -> Void)
 }
 
 // general class with protocol and error handling used for network communication
-final class NetworkRequestManager: NetworkManagerProtocol {
+final class NetworkClient: NetworkClientProtocol {
     
     private let session: URLSession
     
@@ -17,8 +17,8 @@ final class NetworkRequestManager: NetworkManagerProtocol {
         session = urlSession
     }
     
-    func request<T: Decodable>(urlRequestObject: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
-        let task = session.dataTask(with: urlRequestObject, completionHandler: { [weak self] data, response, error in
+    func perform<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, Error>) -> Void) {
+        let task = session.dataTask(with: request, completionHandler: { [weak self] data, response, error in
             if let errorValue = error {
                 completion(.failure(errorValue))
                 return
@@ -28,7 +28,7 @@ final class NetworkRequestManager: NetworkManagerProtocol {
             
             // statusCode 200 -> OK, request was successful
             // statusCode 201 -> Created, request was successful, the requested resource was created by server
-            // statusCode 204 -> No Content, request ws successful, response does not contain data
+            // statusCode 204 -> No Content, request was successful, response does not contain data
             guard httpStatus?.statusCode == 200 || httpStatus?.statusCode == 201 || httpStatus?.statusCode == 204 else {
                 let errorString = "unsuccessful request, http code: \(String(describing: httpStatus?.statusCode))"
                 let error = NSError(domain: ErrorDomainDescription.networkResponseDomain.rawValue, code: httpStatus?.statusCode ?? ErrorDomainCode.unexpectedResponseFromAPI.rawValue, userInfo: [NSLocalizedDescriptionKey: errorString])
@@ -36,7 +36,7 @@ final class NetworkRequestManager: NetworkManagerProtocol {
                 return
             }
             
-            guard let dataObject = data else {
+            guard let data = data else {
                 let errorString = "missing data result from request"
                 let error = NSError(domain: ErrorDomainDescription.networkResponseDomain.rawValue, code: ErrorDomainCode.missingDataResult.rawValue, userInfo: [NSLocalizedDescriptionKey: errorString])
                 completion(.failure(error))
@@ -48,7 +48,7 @@ final class NetworkRequestManager: NetworkManagerProtocol {
             
             do {
                 let decoder = JSONDecoder()
-                let dataFromBackend = try decoder.decode(T.self, from: dataObject)
+                let dataFromBackend = try decoder.decode(T.self, from: data)
                 completion(.success(dataFromBackend))
             } catch let parsingError {
                 let error = NSError(domain: ErrorDomainDescription.networkResponseDomain.rawValue, code: ErrorDomainCode.parseError.rawValue, userInfo: [NSLocalizedDescriptionKey: parsingError.localizedDescription])

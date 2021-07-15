@@ -4,21 +4,21 @@
 
 import Foundation
 
-class GithubService: ObservableObject {
+final class GithubService {
     
-    private var networkRequestHelper: NetworkManagerProtocol
+    private var client: NetworkClientProtocol
     
     var numberRetriesLoadRepos = 0
     let maxNumberRetriesLoadRepos = 3
 
-    init(networkHelper: NetworkManagerProtocol = NetworkRequestManager()) {
-        networkRequestHelper = networkHelper
+    init(client: NetworkClientProtocol = NetworkClient()) {
+        self.client = client
     }
     
     func fetch<T: Decodable>(url: URL?, completion: @escaping (Result<T, Error>) -> Void) {
-        guard let urlValue = url, let requestObject = NetworkRequestUtils.makeRequestObjectFor(url: urlValue, httpMethod: .get) else {
+        guard let url = url, let request = NetworkUtils.makeRequest(url: url, httpMethod: .get) else {
             DispatchQueue.main.async {
-                completion(.failure(NetworkRequestUtils.errorCreatingRequestObject()))
+                completion(.failure(NetworkUtils.errorCreatingRequestObject()))
             }
             
             return
@@ -28,7 +28,7 @@ class GithubService: ObservableObject {
 //            requestObject.addValue("\(localPersistedAuthObject.tokenType) \(localPersistedAuthObject.accessToken)", forHTTPHeaderField: "Authorization")
 //        }
         
-        networkRequestHelper.request(urlRequestObject: requestObject) { (result: Result<T, Error>) in
+        client.perform(request: request) { (result: Result<T, Error>) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let successResult):
@@ -44,7 +44,7 @@ class GithubService: ObservableObject {
     }
     
     func returnErrorWhenFetchRepos<T: Decodable>(error: Error, url: URL?, completion: @escaping (Result<T, Error>) -> Void) -> Bool {
-        let notAuthorizeError = NetworkRequestUtils.errorCodeFrom(error: error)
+        let notAuthorizeError = NetworkUtils.errorCodeFrom(error: error)
         
         guard numberRetriesLoadRepos < maxNumberRetriesLoadRepos, notAuthorizeError == 401 || notAuthorizeError == 403 else {
             // github throws another error (not that user is unauthorized)

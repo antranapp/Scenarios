@@ -8,21 +8,42 @@ import SwiftUI
 import UIKit
 
 struct RemoteImageContainer: View {
-    @ObservedObject var remoteImageContainerViewModel: RemoteImageContainerViewModel
+    @ObservedObject var viewModel: RemoteImageContainerViewModel
     
     var imageWidth: CGFloat
     var imageHeight: CGFloat
     
-    init(imageUrl: URL?, width: CGFloat = 50, height: CGFloat = 50) {
+    init(url: URL?, width: CGFloat = 50, height: CGFloat = 50) {
         imageWidth = width
         imageHeight = height
-        remoteImageContainerViewModel = RemoteImageContainerViewModel(imageUrl: imageUrl)
+        viewModel = RemoteImageContainerViewModel(url: url)
     }
     
     var body: some View {
-        Image(uiImage: remoteImageContainerViewModel.imageData.isEmpty ? UIImage(imageLiteralResourceName: "img_loading") : UIImage(data: remoteImageContainerViewModel.imageData)!)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: imageWidth, height: imageHeight)
+        if viewModel.error {
+            Image(systemName: "xmark")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: imageWidth, height: imageHeight)
+        } else {
+            if viewModel.imageData.isEmpty {
+                Image(systemName: "arrow.clockwise")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: imageWidth, height: imageHeight)
+            } else {
+                if let image = UIImage(data: viewModel.imageData) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: imageWidth, height: imageHeight)
+                } else {
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: imageWidth, height: imageHeight)
+                }
+            }
+        }
     }
 }

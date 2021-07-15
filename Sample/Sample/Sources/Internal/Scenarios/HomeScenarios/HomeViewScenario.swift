@@ -10,6 +10,6 @@ final class HomeViewScenario: Scenario {
     static var name: String = "Docs"
     static var kind: ScenarioKind = .screen
     static var rootViewProvider: RootViewProviding {
-        BasicAppController(rootViewController: UIHostingController(rootView: DocView()))
+        BasicAppController(rootViewController: UIHostingController(rootView: DocView(url: Configuration.production.docsURL)))
     }
 }

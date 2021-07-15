@@ -7,16 +7,16 @@ import SwiftUI
 
 struct DashboardView: View {
     
-    @EnvironmentObject var githubService: GithubService
+    @EnvironmentObject var appServices: AppServices
     
     var body: some View {
         TabView {
-            RepositoryListView(viewModel: RepositoryListViewModel(githubService: githubService))
+            RepositoryListView(viewModel: RepositoryListViewModel(githubService: appServices.githubService))
                 .tabItem {
                     Label("Github", systemImage: "folder.circle")
                 }
 
-            DocView()
+            DocView(url: appServices.docURL)
                 .tabItem {
                     Label("Docs", systemImage: "book.circle")
                 }
