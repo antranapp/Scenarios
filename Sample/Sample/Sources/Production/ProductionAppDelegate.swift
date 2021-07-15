@@ -8,6 +8,6 @@ import SwiftUI
 class ProductionAppDelegate: BaseAppDelegate {
 
     override func makeRootViewController() -> UIViewController {
-        return UIHostingController(rootView: HomeView())
+        return UIHostingController(rootView: DashboardView().environmentObject(GithubService()))
     }
 }

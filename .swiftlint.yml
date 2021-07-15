@@ -1,0 +1,28 @@
+excluded:
+  - Derived/*
+  - AnSwift/Packages/Internal/Sources/Projects/SWAPI-GraphQL/Generated/*
+disabled_rules:
+  - trailing_whitespace
+  - trailing_comma
+  - nesting
+  - cyclomatic_complexity
+  - file_length
+  - todo
+  - function_parameter_count
+  - opening_brace
+  - force_cast
+  - force_try
+  - identifier_name
+line_length:
+  ignores_interpolated_strings: true
+  ignores_comments: true
+  warning: 180
+  error: 200
+inclusive_language:
+  override_allowed_terms:
+    - masterKey
+type_name:
+  min_length:
+    error: 1
+    warning: 1
+  allowed_symbols: "_"
