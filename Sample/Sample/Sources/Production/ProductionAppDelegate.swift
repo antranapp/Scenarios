@@ -8,6 +8,11 @@ import SwiftUI
 class ProductionAppDelegate: BaseAppDelegate {
 
     override func makeRootViewController() -> UIViewController {
-        return UIHostingController(rootView: DashboardView().environmentObject(GithubService()))
+        let appServices = AppServices(
+            docURL: Configuration.production.docsURL,
+            githubService: GithubService(client: Configuration.production.networkClient)
+            
+        )
+        return UIHostingController(rootView: DashboardView().environmentObject(appServices))
     }
 }

@@ -8,7 +8,6 @@ import SwiftUI
 struct PrimaryButtonStyle: View {
     let imageName: String?
     let buttonText: Text
-    let leadingTrailingSpace: CGFloat
     let height: CGFloat
     
     var body: some View {
@@ -20,6 +19,6 @@ struct PrimaryButtonStyle: View {
         }.frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: height, idealHeight: height, maxHeight: height, alignment: .center)
             .background(Color.accentColor)
             .cornerRadius(5)
-            .padding(.init(top: 0, leading: leadingTrailingSpace, bottom: 0, trailing: leadingTrailingSpace))
+            .padding()
     }
 }

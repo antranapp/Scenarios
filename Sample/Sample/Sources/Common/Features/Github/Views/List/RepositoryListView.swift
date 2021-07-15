@@ -6,8 +6,7 @@ import Foundation
 import SwiftUI
 
 struct RepositoryListView: View {
-    @EnvironmentObject var webService: GithubService
-    
+
     @ObservedObject var viewModel: RepositoryListViewModel
         
     @State private var query = ""

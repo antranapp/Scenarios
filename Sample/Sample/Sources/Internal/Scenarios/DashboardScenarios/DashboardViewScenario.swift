@@ -13,8 +13,11 @@ final class DashboardViewScenario: Scenario {
     static var kind: ScenarioKind = .screen
     
     static var rootViewProvider: RootViewProviding {
-        let service = GithubService()
-        let dashboardView = DashboardView().environmentObject(service)
+        let appServices = AppServices(
+            docURL: Configuration.production.docsURL,
+            githubService: GithubService(client: Configuration.production.networkClient)
+        )
+        let dashboardView = DashboardView().environmentObject(appServices)
         return BasicAppController(rootViewController: UIHostingController(rootView: dashboardView))
     }
 }

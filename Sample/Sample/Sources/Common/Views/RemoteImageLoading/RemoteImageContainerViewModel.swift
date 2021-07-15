@@ -8,12 +8,24 @@ import Foundation
 class RemoteImageContainerViewModel: ObservableObject {
     
     @Published var imageData = Data()
+    @Published var error: Bool = false
     
-    init(imageUrl: URL?) {
-        guard let imgUrl = imageUrl else { return }
+    init(url: URL?) {
         
-        URLSession.shared.dataTask(with: imgUrl) { data, response, error in
-            guard let dataValue = data else { return }
+        guard let url = url else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    self.error = true
+                }
+            }
+            guard let dataValue = data else {
+                DispatchQueue.main.async {
+                    self.error = true
+                }
+                return
+            }
             
             DispatchQueue.main.async {
                 self.imageData = dataValue

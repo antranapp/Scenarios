@@ -9,9 +9,8 @@ struct RepositoryRowView: View {
     let repository: Repository
     
     var body: some View {
-        
         HStack {
-            RemoteImageContainer(imageUrl: repository.owner!.avatarImageUrl)
+            RemoteImageContainer(url: repository.owner!.avatarImageUrl)
             
             VStack(alignment: .leading, spacing: 5) {
                 Text(repository.repoName)
@@ -25,6 +24,8 @@ struct RepositoryRowView: View {
                     .font(.subheadline)
                     .foregroundColor(Color.gray)
             }
+            
+            Spacer()
         }
     }
 }

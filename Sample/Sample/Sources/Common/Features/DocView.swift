@@ -5,9 +5,11 @@
 import SwiftUI
 
 struct DocView: View {
+    var url: URL
+    
     var body: some View {
         NavigationView {
-            NavigableWebView(url: URL(string: "https://antranapp.github.io/Scenarios/")!)
+            NavigableWebView(url: url)
         }
     }
 }
