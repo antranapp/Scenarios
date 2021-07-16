@@ -4,13 +4,13 @@
 
 import Foundation
 
-struct PagingHelper {
+struct Paging {
     var pageToFetch: Int = 1
     
-    let maxPagesToLoad = 5
+    private let maxPagesToLoad = 5
     
     // items per page returned by GitHub
-    let numberOfItemsPerPage = 30
+    private let numberOfItemsPerPage = 30
     
     mutating func updatePageToLoad(numberItemsLoaded: Int) {
         guard numberItemsLoaded > 0 else { return }

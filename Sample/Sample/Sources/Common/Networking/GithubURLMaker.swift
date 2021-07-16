@@ -4,11 +4,11 @@
 
 import Foundation
 
-enum GithubURLs {
+enum GithubURLMaker {
         
-    static func loadReposUrl(for query: String?, page: Int) -> String? {
+    static func fetchRepositoryURL(for query: String?, page: Int) -> URL? {
         guard let queryString = query else {
-            return "https://api.github.com/search/repositories?q=language:swift+sort:stars&page=\(page)"
+            return URL(string: "https://api.github.com/search/repositories?q=language:swift+sort:stars&page=\(page)")
         }
         
         guard let urlQuery = queryString.trimmingCharacters(in: .whitespacesAndNewlines).addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) else {
@@ -16,7 +16,7 @@ enum GithubURLs {
             return nil
         }
         
-        return "https://api.github.com/search/repositories?q=\(urlQuery)+sort:stars&page=\(page)"
+        return URL(string: "https://api.github.com/search/repositories?q=\(urlQuery)+sort:stars&page=\(page)")
     }
     
 }
