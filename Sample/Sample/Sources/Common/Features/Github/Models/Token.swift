@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct LoginAccessTokenDTO: Codable {
+struct Token: Codable {
     let accessToken: String
     let tokenType: String
     let scope: String
