@@ -39,5 +39,6 @@ private struct ContentView: View {
                 Text("loading: false, style: medium")
             }
         }
+        .navigationTitle("Loading View")
     }
 }

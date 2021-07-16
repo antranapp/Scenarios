@@ -35,5 +35,6 @@ private struct ContentView: View {
             ErrorView(errorText: "This is a very long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long error message", multipleLines: true)
             Text("Long, multiple lines")
         }
+        .navigationTitle("Error View")
     }
 }

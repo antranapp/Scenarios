@@ -21,8 +21,8 @@ final class GithubService {
             return
         }
         
-        if let token = UserDefaults.standard.object(forKey: GitHubExplorerAppCreds.persistedLoginObject) as? Token {
-            request.addValue("\(token.tokenType) \(token.accessToken)", forHTTPHeaderField: "Authorization")
+        if let accessToken = UserDefaults.standard.object(forKey: Constants.accessTokenKey) as? String {
+            request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         }
         
         client.perform(request: request) { (result: Result<T, Error>) in
@@ -50,7 +50,7 @@ final class GithubService {
         
         // github throws error that user logged out
         // delete persisted credentials and try again to fetch repos without credentials header
-        UserDefaults.standard.removeObject(forKey: GitHubExplorerAppCreds.persistedLoginObject)
+        UserDefaults.standard.removeObject(forKey: Constants.accessTokenKey)
         numberRetriesLoadRepos += 1
         fetch(url: url, completion: completion)
         return false

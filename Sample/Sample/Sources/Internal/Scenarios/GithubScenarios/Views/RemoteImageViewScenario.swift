@@ -44,5 +44,6 @@ private struct ContentView: View {
                 Text("Failed")
             }
         }
+        .navigationTitle("Remote Image View")
     }
 }

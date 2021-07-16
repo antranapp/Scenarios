@@ -41,13 +41,14 @@ private struct ContentView: View {
             Spacer()
         }
         .padding()
+        .navigationTitle("Repository Row")
     }
 }
 
 private extension Repository {
     static let repo1 = Repository(
         id: 1,
-        repoName: "awesome-ios",
+        repoName: "[FAKE] awesome-ios",
         owner: Owner(
             avatarImageUrl: URL(string: "https://avatars.githubusercontent.com/u/484656?v=4"),
             loginName: "vsouza"
@@ -62,7 +63,7 @@ private extension Repository {
     
     static let repo2 = Repository(
         id: 2,
-        repoName: "Alamofire",
+        repoName: "[FAKE] Alamofire",
         owner: Owner(
             avatarImageUrl: URL(string: "https://avatars.githubusercontent.com/u/7774181?v=4"),
             loginName: "Alamofire"
