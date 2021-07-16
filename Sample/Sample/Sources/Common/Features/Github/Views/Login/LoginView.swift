@@ -6,7 +6,15 @@ import SwiftUI
 
 struct LoginView: View {
     
-    @State private var accessToken: String = ""
+    @State private var accessToken: String
+    
+    init() {
+        if let accessToken = UserDefaults.standard.object(forKey: Constants.accessTokenKey) as? String {
+            _accessToken = State(initialValue: accessToken)
+        } else {
+            _accessToken = State(initialValue: "")
+        }
+    }
     
     var body: some View {
         VStack {
@@ -29,7 +37,9 @@ struct LoginView: View {
                 .padding()
             
             Button(action: {
-                print("Should save")
+                print("Should save: \(accessToken)")
+                UserDefaults.standard.setValue(accessToken, forKey: Constants.accessTokenKey)
+                print("AccessToken saved successfully.")
             }) {
                 Text("Save")
             }

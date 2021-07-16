@@ -8,7 +8,7 @@ import SwiftUI
 
 final class NetworkingScenario: Scenario {
     static var name: String = "Networking"
-    static var kind: ScenarioKind = .component
+    static var kind: ScenarioKind = .networking
     
     static var rootViewProvider: RootViewProviding {
         NavigationAppController(withResetButton: true) { _ in
