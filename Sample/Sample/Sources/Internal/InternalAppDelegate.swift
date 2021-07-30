@@ -6,7 +6,7 @@ import Scenarios
 import UIKit
 
 @UIApplicationMain
-class InternalAppDelegate: BaseAppDelegate {
+final class InternalAppDelegate: BaseAppDelegate {
 
     // MARK: Properties
 

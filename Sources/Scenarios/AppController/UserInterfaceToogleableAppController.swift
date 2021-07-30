@@ -6,6 +6,7 @@ import SwiftUI
 import UIKit
 
 // swiftlint:disable type_name
+@available(iOS 13.0, *)
 public struct UserInterfaceToogleableNavigationAppController: RootViewProviding {
     public var rootViewController: UIViewController
 
@@ -18,7 +19,7 @@ public struct UserInterfaceToogleableNavigationAppController: RootViewProviding 
     }
 }
 
-// swiftlint:disable type_name
+@available(iOS 13.0, *)
 class UserInterfaceToogleableNavigationController: UINavigationController, UINavigationControllerDelegate {
 
     private lazy var toggleInterfaceStyleButton: UIBarButtonItem = {
@@ -85,6 +86,7 @@ public extension Reloadable where Self: Taggable {
 
 public typealias ReloadableViewController = Reloadable & UIViewController
 
+@available(iOS 13.0, *)
 public final class ReloadableHostingViewController<Content: View & Reloadable>: UIHostingController<Content>, Reloadable {
     
     public func reload() {

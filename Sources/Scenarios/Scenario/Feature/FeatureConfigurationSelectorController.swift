@@ -7,6 +7,7 @@ import Foundation
 import SwiftUI
 import UIKit
 
+@available(iOS 13, *)
 public class FeatureConfigurationSelectorController<Configuration: Identifiable & CustomStringConvertible, Output>: RootViewProviding {
     
     public var rootViewController = UIViewController()
@@ -133,6 +134,7 @@ public class FeatureConfigurationSelectorController<Configuration: Identifiable 
     }
 }
 
+@available(iOS 13, *)
 private struct ConfigurationSelectionView<Configuration: Identifiable & CustomStringConvertible>: View {
     var configurations: [Configuration]
     var callback: (Configuration) -> Void

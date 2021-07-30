@@ -4,12 +4,12 @@
 
 import Foundation
 
-class MockingEnvrionmentScenario: EnvironmentScenario {
+final class MockingEnvrionmentScenario: EnvironmentScenario {
     static var name: String = "Mocking"
     static var configuration: Configuration = .mocking
 }
 
-class ProductionEnvrionmentScenario: EnvironmentScenario {
+final class ProductionEnvrionmentScenario: EnvironmentScenario {
     static var name: String = "Production"
     static var configuration: Configuration = .production
 }

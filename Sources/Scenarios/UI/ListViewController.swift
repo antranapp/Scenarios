@@ -85,17 +85,18 @@ class ListViewController: UITableViewController {
         
         prepreSearchController()
         
-        let switchLayoutButton = UIBarButtonItem(
-            image: UIImage(systemName: "list.bullet"),
-            style: .plain,
-            target: self,
-            action: #selector(didSwitchLayout)
-        )
-        navigationItem.rightBarButtonItem = switchLayoutButton
+        if #available(iOS 13.0, *) {
+            let switchLayoutButton = UIBarButtonItem(
+                image: UIImage(systemName: "list.bullet"),
+                style: .plain,
+                target: self,
+                action: #selector(didSwitchLayout)
+            )
+            navigationItem.rightBarButtonItem = switchLayoutButton
+        }
     }
     
     func scenarioId(at indexPath: IndexPath) -> ScenarioId? {
-        print(sections[indexPath.section].rows[indexPath.row])
         return sections[indexPath.section].rows[indexPath.row].scenarioId
     }
     
@@ -183,7 +184,6 @@ extension ListViewController: UISearchResultsUpdating {
         guard let searchText = searchController.searchBar.text else {
             return
         }
-        print(searchText)
         filterRows(searchText)
     }
     
