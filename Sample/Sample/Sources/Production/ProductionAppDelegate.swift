@@ -5,7 +5,7 @@
 import SwiftUI
 
 @UIApplicationMain
-class ProductionAppDelegate: BaseAppDelegate {
+final class ProductionAppDelegate: BaseAppDelegate {
 
     override func makeRootViewController() -> UIViewController {
         let appServices = AppServices(

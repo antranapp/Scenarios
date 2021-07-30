@@ -14,7 +14,11 @@ class CollectionViewController: UIViewController {
     
     private var searchController: UISearchController!
 
-    init(title: String, sections: [ListSection]) {
+    init(
+        title: String,
+        sections: [ListSection],
+        
+    ) {
         self.sections = sections
         super.init(nibName: nil, bundle: nil)
         self.title = title

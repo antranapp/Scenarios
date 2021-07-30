@@ -55,7 +55,12 @@ class ResetableRefreshableNavigationController: UINavigationController, UINaviga
         guard navigationController.viewControllers.count == 1 else { return }
 
         if hasResetButton {
-            let barItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(reset))
+            let barItem: UIBarButtonItem
+            if #available(iOS 13, *) {
+                barItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(reset))
+            } else {
+                barItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(reset))
+            }
             viewController.navigationItem.leftBarButtonItem = barItem
         }
         

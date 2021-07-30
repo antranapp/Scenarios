@@ -4,6 +4,7 @@
 
 import Foundation
 
+@available(iOS 13.0, *)
 public protocol FeatureScenario: AudienceTargetableScenario {
     associatedtype Configuration
     associatedtype Output
