@@ -19,7 +19,6 @@
 		7F343ED7265080AC002DC440 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F343EC126507FCF002DC440 /* Assets.xcassets */; };
 		7F343EDE265080E8002DC440 /* InternalAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EDD265080E8002DC440 /* InternalAppDelegate.swift */; };
 		7F343EE0265080EF002DC440 /* ProductionAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EDF265080EF002DC440 /* ProductionAppDelegate.swift */; };
-		7F343EEE26508414002DC440 /* Scenarios in Frameworks */ = {isa = PBXBuildFile; productRef = 7F343EED26508414002DC440 /* Scenarios */; };
 		7F343EF426508FE3002DC440 /* HomeViewScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EF326508FE3002DC440 /* HomeViewScenario.swift */; };
 		7F343EFC2650CA6B002DC440 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EFB2650CA6B002DC440 /* UnitTests.swift */; };
 		7F343F0A2650CA8D002DC440 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343F092650CA8D002DC440 /* UITests.swift */; };
@@ -33,10 +32,12 @@
 		D7580B96269FDE640003F79F /* ErrorViewScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7580B95269FDE640003F79F /* ErrorViewScenario.swift */; };
 		D7580B98269FE2220003F79F /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7580B97269FE2220003F79F /* View+If.swift */; };
 		D7580B99269FE2220003F79F /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7580B97269FE2220003F79F /* View+If.swift */; };
+		D7657AB1271D3E4E00FDF4C5 /* Scenarios in Frameworks */ = {isa = PBXBuildFile; productRef = D7657AB0271D3E4E00FDF4C5 /* Scenarios */; };
+		D7657AB3271D3E5200FDF4C5 /* Scenarios in Frameworks */ = {isa = PBXBuildFile; productRef = D7657AB2271D3E5200FDF4C5 /* Scenarios */; };
+		D7657AB5271D3E5600FDF4C5 /* Scenarios in Frameworks */ = {isa = PBXBuildFile; productRef = D7657AB4271D3E5600FDF4C5 /* Scenarios */; };
 		D76CC628269FE57500499B2B /* RemoteImageViewScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76CC627269FE57500499B2B /* RemoteImageViewScenario.swift */; };
 		D76DC230271D136200396CE9 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C278269E922300F1C62D /* Debouncer.swift */; };
 		D76DC236271D136200396CE9 /* BaseAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EBB26507FCD002DC440 /* BaseAppDelegate.swift */; };
-		D76DC23C271D136200396CE9 /* Scenarios in Frameworks */ = {isa = PBXBuildFile; productRef = D76DC205271D136200396CE9 /* Scenarios */; };
 		D76DC23E271D136200396CE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F343EC626507FCF002DC440 /* LaunchScreen.storyboard */; };
 		D76DC23F271D136200396CE9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D7B1C285269ED87A00F1C62D /* Localizable.strings */; };
 		D76DC240271D136200396CE9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F343EC426507FCF002DC440 /* Preview Assets.xcassets */; };
@@ -152,7 +153,6 @@
 		7F343EDC265080AC002DC440 /* Info-Internal.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-Internal.plist"; sourceTree = "<group>"; };
 		7F343EDD265080E8002DC440 /* InternalAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalAppDelegate.swift; sourceTree = "<group>"; };
 		7F343EDF265080EF002DC440 /* ProductionAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductionAppDelegate.swift; sourceTree = "<group>"; };
-		7F343EEB265083CD002DC440 /* Scenarios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Scenarios; path = ..; sourceTree = "<group>"; };
 		7F343EF326508FE3002DC440 /* HomeViewScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewScenario.swift; sourceTree = "<group>"; };
 		7F343EF92650CA6B002DC440 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F343EFB2650CA6B002DC440 /* UnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTests.swift; sourceTree = "<group>"; };
@@ -223,6 +223,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7657AB5271D3E5600FDF4C5 /* Scenarios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,7 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F343EEE26508414002DC440 /* Scenarios in Frameworks */,
+				D7657AB3271D3E5200FDF4C5 /* Scenarios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +253,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D76DC23C271D136200396CE9 /* Scenarios in Frameworks */,
+				D7657AB1271D3E4E00FDF4C5 /* Scenarios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,7 +263,6 @@
 		7F343EAF26507FCD002DC440 = {
 			isa = PBXGroup;
 			children = (
-				7F343EEB265083CD002DC440 /* Scenarios */,
 				7F343EBA26507FCD002DC440 /* Sample */,
 				7F343EFA2650CA6B002DC440 /* UnitTests */,
 				7F343F082650CA8D002DC440 /* UITests */,
@@ -626,6 +626,9 @@
 			dependencies = (
 			);
 			name = "Sample-Production";
+			packageProductDependencies = (
+				D7657AB4271D3E5600FDF4C5 /* Scenarios */,
+			);
 			productName = Sample;
 			productReference = 7F343EB826507FCD002DC440 /* Scenarios.app */;
 			productType = "com.apple.product-type.application";
@@ -644,7 +647,7 @@
 			);
 			name = "Sample-Internal";
 			packageProductDependencies = (
-				7F343EED26508414002DC440 /* Scenarios */,
+				D7657AB2271D3E5200FDF4C5 /* Scenarios */,
 			);
 			productName = Sample;
 			productReference = 7F343EDB265080AC002DC440 /* Internal.app */;
@@ -700,7 +703,7 @@
 			);
 			name = "Sample-Internal-iOS11";
 			packageProductDependencies = (
-				D76DC205271D136200396CE9 /* Scenarios */,
+				D7657AB0271D3E4E00FDF4C5 /* Scenarios */,
 			);
 			productName = Sample;
 			productReference = D76DC246271D136200396CE9 /* Sample-Internal-iOS11.app */;
@@ -1146,6 +1149,7 @@
 				DEVELOPMENT_TEAM = MLEGRA34R3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Sample/Resources/Info-Internal.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1168,6 +1172,7 @@
 				DEVELOPMENT_TEAM = MLEGRA34R3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Sample/Resources/Info-Internal.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1368,11 +1373,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7F343EED26508414002DC440 /* Scenarios */ = {
+		D7657AB0271D3E4E00FDF4C5 /* Scenarios */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Scenarios;
 		};
-		D76DC205271D136200396CE9 /* Scenarios */ = {
+		D7657AB2271D3E5200FDF4C5 /* Scenarios */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Scenarios;
+		};
+		D7657AB4271D3E5600FDF4C5 /* Scenarios */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Scenarios;
 		};
