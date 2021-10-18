@@ -4,7 +4,8 @@
 
 import Foundation
 
-class AppServices: ObservableObject {
+@available(iOS 13.0, *)
+final class AppServices: ObservableObject {
     let docURL: URL
     let githubService: GithubService
     

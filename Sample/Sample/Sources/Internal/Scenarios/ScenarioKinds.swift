@@ -11,4 +11,5 @@ extension ScenarioKind {
     @objc static let component = ScenarioKind(rawValue: "Component", nameForSorting: "3")
     @objc static let designSystem = ScenarioKind(rawValue: "Design System", nameForSorting: "3")
     @objc static let networking = ScenarioKind(rawValue: "Networking", nameForSorting: "4")
+    @objc static let prototype = ScenarioKind(rawValue: "Prototype", nameForSorting: "5")
 }

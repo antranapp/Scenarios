@@ -12,8 +12,9 @@ public protocol FeatureScenario: AudienceTargetableScenario {
     static var context: FeatureContext<Configuration, Output> { get }
 }
 
-extension FeatureScenario {
-    public static var kind: ScenarioKind {
+@available(iOS 13.0, *)
+public extension FeatureScenario {
+    static var kind: ScenarioKind {
         .feature
     }
 }

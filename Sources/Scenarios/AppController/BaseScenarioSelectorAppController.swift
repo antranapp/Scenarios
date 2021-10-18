@@ -31,18 +31,70 @@ class BaseScenarioSelectorAppController: RootViewProviding {
     // MARK: Initilizer
     
     init(
+        navigationController: UINavigationController = UINavigationController(),
         targetAudience: Audience?,
         select: @escaping (ScenarioId) -> Void
     ) {
         self.targetAudience = targetAudience
 
-        let navigationController = UINavigationController()
         rootViewController = navigationController
         navigationController.navigationBar.prefersLargeTitles = true
-        sections = self.makeSections(select: select, favouriteScenarios: [])
+        sections = makeSections(select: select, favouriteScenarios: [])
+
+        // For some reasons, the content is not get updated on the first launch
+        // on iOS 11. Need to call these explicitly to build up the Scenario Catalog
+        content = makeScenarioViewController(with: sections)
+        (rootViewController as! UINavigationController).viewControllers = [content!]
     }
 
-    func makeScenarioViewController(with sections: [ListSection]) -> UIViewController {
+    func makeSections(
+        select: @escaping (ScenarioId) -> Void,
+        favouriteScenarios: [ScenarioId]
+    ) -> [ListSection] {
+        let sections = ScenarioKind.allCases
+            .sorted { $0.nameForSorting < $1.nameForSorting }
+            .compactMap {
+                ListSection(
+                    targetAudience: targetAudience,
+                    scenariosOfKind: $0,
+                    select: select,
+                    showInfo: { [weak self] info in self?.showInfo(info) }
+                )
+            }
+            .filter { !$0.rows.isEmpty }
+
+        var groupedSections = sections.map { section -> ListSection in
+            var newRows = [ListRow]()
+            // Merge category row
+            for row in section.rows {
+                if let categoryRowIndex = newRows.firstIndex(where: { $0.id == row.id }) { // found existing categories
+                    // Try to merge sub-category rows as well
+                    for subCategoryRow in row.subRows {
+                        if let subCategoryRowIndex = newRows[categoryRowIndex].subRows.firstIndex(where: { $0.id == subCategoryRow.id }) { // found existing subCategory
+                            newRows[categoryRowIndex].subRows[subCategoryRowIndex].subRows.append(contentsOf: subCategoryRow.subRows)
+                        } else {
+                            newRows[categoryRowIndex].subRows.append(subCategoryRow)
+                        }
+                    }
+                } else {
+                    newRows.append(row)
+                }
+            }
+
+            return ListSection(id: section.id, title: section.title, rows: newRows)
+        }
+
+        // Insert the favourite section
+        if let favouriteSection = makeFavouriteSection(select: select, favouriteScenarios: favouriteScenarios) {
+            groupedSections.insert(favouriteSection, at: 0)
+        }
+
+        return groupedSections
+    }
+
+    // MARK: Private helpers
+
+    private func makeScenarioViewController(with sections: [ListSection]) -> UIViewController {
         let viewController: UIViewController
         switch layout {
         case .nestedList:
@@ -56,8 +108,6 @@ class BaseScenarioSelectorAppController: RootViewProviding {
         }
         return viewController
     }
-
-    // MARK: Private helpers
 
     private func showInfo(_ info: ScenarioInfo) {
         var action: UIAlertAction?
@@ -81,51 +131,6 @@ class BaseScenarioSelectorAppController: RootViewProviding {
             preferredStyle: .actionSheet,
             action: action
         )
-    }
-    
-    func makeSections(
-        select: @escaping (ScenarioId) -> Void,
-        favouriteScenarios: [ScenarioId]
-    ) -> [ListSection] {
-        let sections = ScenarioKind.allCases
-            .sorted { $0.nameForSorting < $1.nameForSorting }
-            .compactMap {
-                ListSection(
-                    targetAudience: targetAudience,
-                    scenariosOfKind: $0,
-                    select: select,
-                    showInfo: { [weak self] info in self?.showInfo(info) }
-                )
-            }
-            .filter { !$0.rows.isEmpty }
-                
-        var groupedSections = sections.map { section -> ListSection in
-            var newRows = [ListRow]()
-            // Merge category row
-            for row in section.rows {
-                if let categoryRowIndex = newRows.firstIndex(where: { $0.id == row.id }) { // found existing categories
-                    // Try to merge sub-category rows as well
-                    for subCategoryRow in row.subRows {
-                        if let subCategoryRowIndex = newRows[categoryRowIndex].subRows.firstIndex(where: { $0.id == subCategoryRow.id }) { // found existing subCategory
-                            newRows[categoryRowIndex].subRows[subCategoryRowIndex].subRows.append(contentsOf: subCategoryRow.subRows)
-                        } else {
-                            newRows[categoryRowIndex].subRows.append(subCategoryRow)
-                        }
-                    }
-                } else {
-                    newRows.append(row)
-                }
-            }
-            
-            return ListSection(id: section.id, title: section.title, rows: newRows)
-        }
-        
-        // Insert the favourite section
-        if let favouriteSection = makeFavouriteSection(select: select, favouriteScenarios: favouriteScenarios) {
-            groupedSections.insert(favouriteSection, at: 0)
-        }
-        
-        return groupedSections
     }
     
     private func makeFavouriteSection(

@@ -6,6 +6,7 @@ import Combine
 import Foundation
 import SwiftUI
 
+@available(iOS 13.0, *)
 final class RepositoryListViewModel: ObservableObject {
     
     private let githubService: GithubService

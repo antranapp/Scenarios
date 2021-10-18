@@ -16,8 +16,7 @@ class CollectionViewController: UIViewController {
 
     init(
         title: String,
-        sections: [ListSection],
-        
+        sections: [ListSection]
     ) {
         self.sections = sections
         super.init(nibName: nil, bundle: nil)
