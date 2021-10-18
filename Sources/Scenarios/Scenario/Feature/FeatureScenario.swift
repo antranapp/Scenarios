@@ -10,3 +10,9 @@ public protocol FeatureScenario: AudienceTargetableScenario {
     
     static var context: FeatureContext<Configuration, Output> { get }
 }
+
+extension FeatureScenario {
+    public static var kind: ScenarioKind {
+        .feature
+    }
+}
