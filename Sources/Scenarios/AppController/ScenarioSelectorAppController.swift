@@ -1,15 +1,12 @@
 //
-//  File.swift
-//  
-//
-//  Created by An Tran on 31/7/21.
+// Copyright © 2021 An Tran. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 @available(iOS 13.0, *)
-class ScenarioSelectorAppController: BaseScenarioSelectorAppController {
+final class ScenarioSelectorAppController: BaseScenarioSelectorAppController {
 
     private var cancellables = Set<AnyCancellable>()
     private var favouriteScenarios: AnyPublisher<[ScenarioId], Never>?
@@ -36,4 +33,3 @@ class ScenarioSelectorAppController: BaseScenarioSelectorAppController {
     }
 
 }
-
