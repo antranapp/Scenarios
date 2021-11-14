@@ -7,20 +7,25 @@ import UIKit
 public class NavigationAppController: RootViewProviding {
     public var rootViewController: UIViewController
 
-    public init(
+    public convenience init(
         withResetButton: Bool = false,
         withRefreshButton: Bool = false,
         makeChild: (UINavigationController) -> UIViewController
     ) {
-        var navigationController: UINavigationController
-        if withResetButton || withRefreshButton {
-            navigationController = ResetableRefreshableNavigationController(
-                hasResetButton: withResetButton,
-                hasRefreshButton: withRefreshButton
-            )
-        } else {
-            navigationController = UINavigationController()
-        }
+        let navigationController = ResetableRefreshableNavigationController(
+            hasResetButton: withResetButton,
+            hasRefreshButton: withRefreshButton
+        )
+        self.init(
+            navigationController: navigationController,
+            makeChild: makeChild
+        )
+    }
+
+    public init(
+        navigationController: UINavigationController,
+        makeChild: (UINavigationController) -> UIViewController
+    ) {
         navigationController.pushViewController(makeChild(navigationController), animated: false)
         rootViewController = navigationController
     }

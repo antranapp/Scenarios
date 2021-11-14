@@ -7,20 +7,26 @@ import UIKit
 
 // swiftlint:disable type_name
 @available(iOS 13.0, *)
-public struct UserInterfaceToogleableNavigationAppController: RootViewProviding {
-    public var rootViewController: UIViewController
+public class UserInterfaceToogleableNavigationAppController: NavigationAppController {
 
     public init(
+        withResetButton: Bool = false,
+        withRefreshButton: Bool = false,
         makeChild: (UINavigationController) -> ReloadableViewController
     ) {
-        let navigationController = UserInterfaceToogleableNavigationController()
-        navigationController.pushViewController(makeChild(navigationController), animated: false)
-        rootViewController = navigationController
+        let navigationController = UserInterfaceToogleableNavigationController(
+            hasResetButton: withResetButton,
+            hasRefreshButton: withResetButton
+        )
+        super.init(
+            navigationController: navigationController,
+            makeChild: makeChild
+        )
     }
 }
 
 @available(iOS 13.0, *)
-class UserInterfaceToogleableNavigationController: UINavigationController, UINavigationControllerDelegate {
+class UserInterfaceToogleableNavigationController: ResetableRefreshableNavigationController {
 
     private lazy var toggleInterfaceStyleButton: UIBarButtonItem = {
         UIBarButtonItem(
@@ -28,11 +34,14 @@ class UserInterfaceToogleableNavigationController: UINavigationController, UINav
             style: .plain, target: self, action: #selector(self.didToggleAppearanceMode)
         )
     }()
-    
-    init() {
-        super.init(nibName: nil, bundle: nil)
+
+    override init(
+        hasResetButton: Bool = false,
+        hasRefreshButton: Bool = false
+    ) {
+        super.init(hasResetButton: hasResetButton, hasRefreshButton: hasRefreshButton)
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -43,7 +52,12 @@ class UserInterfaceToogleableNavigationController: UINavigationController, UINav
         delegate = self
     }
 
-    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    override func navigationController(
+        _ navigationController: UINavigationController,
+        willShow viewController: UIViewController,
+        animated: Bool
+    ) {
+        super.navigationController(navigationController, willShow: viewController, animated: animated)
         viewController.navigationItem.rightBarButtonItem = toggleInterfaceStyleButton
     }
     

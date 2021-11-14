@@ -11,7 +11,7 @@ public class TypographyScenario: AudienceTargetableScenario {
     public static let kind = ScenarioKind.designSystem
     
     public static var rootViewProvider: RootViewProviding {
-        UserInterfaceToogleableNavigationAppController { _ in
+        UserInterfaceToogleableNavigationAppController(withResetButton: true) { _ in
             ReloadableHostingViewController(rootView: ContentView())
         }
     }
