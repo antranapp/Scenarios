@@ -24,7 +24,7 @@ final class GithubService {
         if let accessToken = UserDefaults.standard.object(forKey: Constants.accessTokenKey) as? String {
             request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         }
-        
+
         client.perform(request: request) { (result: Result<T, Error>) in
             switch result {
             case .success(let successResult):
