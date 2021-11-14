@@ -23,7 +23,7 @@ struct RepositoryListView: View {
                     ErrorView(errorText: String.localizedString(forKey: "txt_error_load_repos"))
                 }
                 
-                TextField("search_bar_hint", text: binding, onCommit: {
+                TextField(String.localizedString(forKey: "search_bar_hint"), text: binding, onCommit: {
                     self.viewModel.fetchResults(for: self.query, isSearching: false)
                 })
                 
