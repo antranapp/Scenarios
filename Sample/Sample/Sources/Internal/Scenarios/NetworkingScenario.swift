@@ -2,6 +2,7 @@
 // Copyright © 2021 An Tran. All rights reserved.
 //
 
+import CodeViewer
 import Foundation
 import Scenarios
 import SwiftUI
@@ -19,18 +20,28 @@ final class NetworkingScenario: Scenario {
 
 private struct ContentView: View {
     
-    class ViewModel: ObservableObject {
+    final class ViewModel: ObservableObject {
         @Published var response: String?
         @Published var error: String?
+        @Published var keyword: String = "language:swift+sort:stars"
+
+        private let service: GithubService
+
+        init() {
+            let client = NetworkClient()
+            service = GithubService(client: client)
+        }
         
         func load() {
-            let client = NetworkClient()
-            let service = GithubService(client: client)
 
-            guard let url = GithubURLMaker.fetchRepositoryURL(for: nil, page: 1) else {
+            response = nil
+            error = nil
+
+            guard let url = GithubURLMaker.fetchRepositoryURL(for: keyword, page: 1) else {
+                self.error = "Invalid request"
                 return
             }
-            
+
             service.fetch(url: url) { [weak self] (result: Result<RepositoryList, Error>) in
                 DispatchQueue.main.async {
                     switch result {
@@ -47,24 +58,38 @@ private struct ContentView: View {
     @StateObject var viewModel = ViewModel()
     
     var body: some View {
-        VStack {
-            ScrollView {
-                VStack {
-                    if let response = viewModel.response {
-                        Text(response)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    
-                    if let error = viewModel.error {
-                        Text(error)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
+        VStack(spacing: 0) {
+            TextField("Keyword", text: $viewModel.keyword)
+                .autocapitalization(.none)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal)
+                .padding(.top)
 
-                    Spacer()
-                }
-                .padding()
+            PrimaryButton(
+                imageName: nil,
+                buttonText: Text("Send request"),
+                height: 45
+            )
+            .onTapGesture {
+                viewModel.load()
             }
-            
+
+            if let response = viewModel.response {
+                CodeViewer(
+                    content: .constant(response),
+                    mode: .json,
+                    darkTheme: .solarized_dark,
+                    lightTheme: .solarized_light,
+                    fontSize: 40
+                )
+            }
+
+            if let error = viewModel.error {
+                Text(error)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+
+            Spacer()
         }
         .navigationTitle("Networking")
         .onAppear {

@@ -5,7 +5,7 @@
 import SwiftUI
 
 // TODO: Change to ButtonStyle
-struct PrimaryButtonStyle: View {
+struct PrimaryButton: View {
     let imageName: String?
     let buttonText: Text
     let height: CGFloat

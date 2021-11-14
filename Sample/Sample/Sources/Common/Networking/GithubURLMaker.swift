@@ -7,7 +7,7 @@ import Foundation
 enum GithubURLMaker {
         
     static func fetchRepositoryURL(for query: String?, page: Int) -> URL? {
-        guard let queryString = query else {
+        guard let queryString = query, !queryString.isEmpty else {
             return URL(string: "https://api.github.com/search/repositories?q=language:swift+sort:stars&page=\(page)")
         }
         

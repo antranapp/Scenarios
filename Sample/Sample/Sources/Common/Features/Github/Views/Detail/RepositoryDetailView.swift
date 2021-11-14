@@ -33,7 +33,7 @@ struct RepositoryDetailView: View {
             }
             
             NavigationLink(destination: NavigableWebView(title: repository.repoName, url: repository.htmlUrl)) {
-                PrimaryButtonStyle(
+                PrimaryButton(
                     imageName: nil,
                     buttonText: Text("btn_txt_open_github"),
                     height: 45

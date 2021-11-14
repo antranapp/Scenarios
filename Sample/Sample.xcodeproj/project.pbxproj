@@ -23,6 +23,7 @@
 		7F343EFC2650CA6B002DC440 /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343EFB2650CA6B002DC440 /* UnitTests.swift */; };
 		7F343F0A2650CA8D002DC440 /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F343F092650CA8D002DC440 /* UITests.swift */; };
 		D700E70026A03A58007AEC7C /* WebViewScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = D700E6FF26A03A58007AEC7C /* WebViewScenario.swift */; };
+		D721CD4F2740E9DF00F14D0A /* CodeViewer in Frameworks */ = {isa = PBXBuildFile; productRef = D721CD4E2740E9DF00F14D0A /* CodeViewer */; };
 		D744C7AD26A1592400076EC0 /* NetworkingScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744C7AC26A1592400076EC0 /* NetworkingScenario.swift */; };
 		D744C7AF26A1915500076EC0 /* TypographyScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = D744C7AE26A1915500076EC0 /* TypographyScenario.swift */; };
 		D7580B8D269FC4E80003F79F /* NavigableWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7580B8C269FC4E80003F79F /* NavigableWebView.swift */; };
@@ -103,8 +104,8 @@
 		D7B1C267269E8D9400F1C62D /* RemoteImageContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C264269E8D9400F1C62D /* RemoteImageContainer.swift */; };
 		D7B1C268269E8D9400F1C62D /* RemoteImageContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C265269E8D9400F1C62D /* RemoteImageContainerViewModel.swift */; };
 		D7B1C269269E8D9400F1C62D /* RemoteImageContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C265269E8D9400F1C62D /* RemoteImageContainerViewModel.swift */; };
-		D7B1C270269E8DD100F1C62D /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C26C269E8DD100F1C62D /* PrimaryButtonStyle.swift */; };
-		D7B1C271269E8DD100F1C62D /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C26C269E8DD100F1C62D /* PrimaryButtonStyle.swift */; };
+		D7B1C270269E8DD100F1C62D /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C26C269E8DD100F1C62D /* PrimaryButton.swift */; };
+		D7B1C271269E8DD100F1C62D /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C26C269E8DD100F1C62D /* PrimaryButton.swift */; };
 		D7B1C275269E8DFB00F1C62D /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C274269E8DFB00F1C62D /* WebView.swift */; };
 		D7B1C276269E8DFB00F1C62D /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C274269E8DFB00F1C62D /* WebView.swift */; };
 		D7B1C279269E922300F1C62D /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B1C278269E922300F1C62D /* Debouncer.swift */; };
@@ -208,7 +209,7 @@
 		D7B1C25E269E8D7000F1C62D /* RepositoryDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryDetailView.swift; sourceTree = "<group>"; };
 		D7B1C264269E8D9400F1C62D /* RemoteImageContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImageContainer.swift; sourceTree = "<group>"; };
 		D7B1C265269E8D9400F1C62D /* RemoteImageContainerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteImageContainerViewModel.swift; sourceTree = "<group>"; };
-		D7B1C26C269E8DD100F1C62D /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
+		D7B1C26C269E8DD100F1C62D /* PrimaryButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		D7B1C274269E8DFB00F1C62D /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		D7B1C278269E922300F1C62D /* Debouncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		D7B1C27B269E923000F1C62D /* Paging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paging.swift; sourceTree = "<group>"; };
@@ -232,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7657AB3271D3E5200FDF4C5 /* Scenarios in Frameworks */,
+				D721CD4F2740E9DF00F14D0A /* CodeViewer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +586,7 @@
 			children = (
 				D7B1C274269E8DFB00F1C62D /* WebView.swift */,
 				D7580B8C269FC4E80003F79F /* NavigableWebView.swift */,
-				D7B1C26C269E8DD100F1C62D /* PrimaryButtonStyle.swift */,
+				D7B1C26C269E8DD100F1C62D /* PrimaryButton.swift */,
 				D7B1C263269E8D9400F1C62D /* RemoteImageLoading */,
 				D7B1C251269E8D2C00F1C62D /* ErrorView */,
 				D7B1C24A269E8D2300F1C62D /* LoadingView */,
@@ -648,6 +650,7 @@
 			name = "Sample-Internal";
 			packageProductDependencies = (
 				D7657AB2271D3E5200FDF4C5 /* Scenarios */,
+				D721CD4E2740E9DF00F14D0A /* CodeViewer */,
 			);
 			productName = Sample;
 			productReference = 7F343EDB265080AC002DC440 /* Internal.app */;
@@ -741,6 +744,9 @@
 				de,
 			);
 			mainGroup = 7F343EAF26507FCD002DC440;
+			packageReferences = (
+				D721CD4D2740E9DF00F14D0A /* XCRemoteSwiftPackageReference "CodeViewer" */,
+			);
 			productRefGroup = 7F343EB926507FCD002DC440 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -841,7 +847,7 @@
 				D7B1C22D269E8C8800F1C62D /* RepositoryListView.swift in Sources */,
 				D7B1C258269E8D5D00F1C62D /* UIApplication+EndEditing.swift in Sources */,
 				D7B1C289269EDA1C00F1C62D /* Constants.swift in Sources */,
-				D7B1C270269E8DD100F1C62D /* PrimaryButtonStyle.swift in Sources */,
+				D7B1C270269E8DD100F1C62D /* PrimaryButton.swift in Sources */,
 				D7B1C261269E8D7000F1C62D /* RepositoryDetailView.swift in Sources */,
 				7F343EC026507FCD002DC440 /* DocView.swift in Sources */,
 				D7580B98269FE2220003F79F /* View+If.swift in Sources */,
@@ -883,7 +889,7 @@
 				D76FF100269D94BA009223E6 /* GithubRepositoryListScenario.swift in Sources */,
 				D7B1C247269E8CBD00F1C62D /* Repository.swift in Sources */,
 				D7B1C243269E8CBD00F1C62D /* RepositoryList.swift in Sources */,
-				D7B1C271269E8DD100F1C62D /* PrimaryButtonStyle.swift in Sources */,
+				D7B1C271269E8DD100F1C62D /* PrimaryButton.swift in Sources */,
 				D7580B99269FE2220003F79F /* View+If.swift in Sources */,
 				D7B1C245269E8CBD00F1C62D /* Owner.swift in Sources */,
 				D7580B94269FD88E0003F79F /* LoadingViewScenario.swift in Sources */,
@@ -1372,7 +1378,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		D721CD4D2740E9DF00F14D0A /* XCRemoteSwiftPackageReference "CodeViewer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dwarvesf/CodeViewer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		D721CD4E2740E9DF00F14D0A /* CodeViewer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D721CD4D2740E9DF00F14D0A /* XCRemoteSwiftPackageReference "CodeViewer" */;
+			productName = CodeViewer;
+		};
 		D7657AB0271D3E4E00FDF4C5 /* Scenarios */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Scenarios;
