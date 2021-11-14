@@ -44,6 +44,12 @@ https://user-images.githubusercontent.com/478757/136145086-85e43b43-9479-432a-b3
 
 Please check out the Sample project.
 
+# Acknowledgement
+
+The original idea comes from the team working on [the NHS COVID-19 App](https://apps.apple.com/gb/app/nhs-covid-19/id1520427663)
+
+The original source code is taken from the iOS source code of the [NHS Covid-19 App](https://github.com/nihp-public/covid-19-app-ios-ag-public)  
+
 # License
 
 MIT
