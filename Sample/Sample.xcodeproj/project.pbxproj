@@ -55,6 +55,9 @@
 		D76FF100269D94BA009223E6 /* GithubRepositoryListScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FF0FF269D94BA009223E6 /* GithubRepositoryListScenario.swift */; };
 		D76FF104269D9539009223E6 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FF103269D9538009223E6 /* DashboardView.swift */; };
 		D76FF105269D9539009223E6 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D76FF103269D9538009223E6 /* DashboardView.swift */; };
+		D79B18F82742327A00681BC4 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D79B18F72742327A00681BC4 /* Media.xcassets */; };
+		D79B18FA2742329100681BC4 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D79B18F92742329100681BC4 /* Media.xcassets */; };
+		D79B18FB2742329100681BC4 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D79B18F92742329100681BC4 /* Media.xcassets */; };
 		D7AAA22426A0090F00C2F987 /* RepositoryRowViewScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AAA22326A0090F00C2F987 /* RepositoryRowViewScenario.swift */; };
 		D7AAA22626A0104E00C2F987 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AAA22526A0104E00C2F987 /* Configuration.swift */; };
 		D7AAA22726A0104E00C2F987 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AAA22526A0104E00C2F987 /* Configuration.swift */; };
@@ -143,7 +146,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7F343EB826507FCD002DC440 /* Scenarios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scenarios.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F343EB826507FCD002DC440 /* Production.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Production.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F343EBB26507FCD002DC440 /* BaseAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAppDelegate.swift; sourceTree = "<group>"; };
 		7F343EBF26507FCD002DC440 /* DocView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocView.swift; sourceTree = "<group>"; };
 		7F343EC126507FCF002DC440 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 		D76FF0FA269D948C009223E6 /* ScenarioKinds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioKinds.swift; sourceTree = "<group>"; };
 		D76FF0FF269D94BA009223E6 /* GithubRepositoryListScenario.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubRepositoryListScenario.swift; sourceTree = "<group>"; };
 		D76FF103269D9538009223E6 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		D79B18F72742327A00681BC4 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		D79B18F92742329100681BC4 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		D7AAA22326A0090F00C2F987 /* RepositoryRowViewScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRowViewScenario.swift; sourceTree = "<group>"; };
 		D7AAA22526A0104E00C2F987 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		D7AAA22826A01B4700C2F987 /* EnvironmentScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentScenario.swift; sourceTree = "<group>"; };
@@ -276,7 +281,7 @@
 		7F343EB926507FCD002DC440 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7F343EB826507FCD002DC440 /* Scenarios.app */,
+				7F343EB826507FCD002DC440 /* Production.app */,
 				7F343EDB265080AC002DC440 /* Internal.app */,
 				7F343EF92650CA6B002DC440 /* UnitTests.xctest */,
 				7F343F072650CA8D002DC440 /* UITests.xctest */,
@@ -316,6 +321,9 @@
 		7F343EE8265081B7002DC440 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D79B18F62742326500681BC4 /* Production */,
+				D79B18F52742325900681BC4 /* Internal */,
+				D79B18F42742325300681BC4 /* Common */,
 				7F343EC126507FCF002DC440 /* Assets.xcassets */,
 				7F343EC626507FCF002DC440 /* LaunchScreen.storyboard */,
 				7F343EC926507FCF002DC440 /* Info-Production.plist */,
@@ -438,6 +446,29 @@
 				D7580B90269FD4480003F79F /* GithubRepositoryDetailScenario.swift */,
 			);
 			path = GithubScenarios;
+			sourceTree = "<group>";
+		};
+		D79B18F42742325300681BC4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D79B18F52742325900681BC4 /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				D79B18F92742329100681BC4 /* Media.xcassets */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
+		D79B18F62742326500681BC4 /* Production */ = {
+			isa = PBXGroup;
+			children = (
+				D79B18F72742327A00681BC4 /* Media.xcassets */,
+			);
+			path = Production;
 			sourceTree = "<group>";
 		};
 		D7AAA23226A0257800C2F987 /* Mocks */ = {
@@ -632,7 +663,7 @@
 				D7657AB4271D3E5600FDF4C5 /* Scenarios */,
 			);
 			productName = Sample;
-			productReference = 7F343EB826507FCD002DC440 /* Scenarios.app */;
+			productReference = 7F343EB826507FCD002DC440 /* Production.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7F343ECF265080AC002DC440 /* Sample-Internal */ = {
@@ -765,6 +796,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D79B18F82742327A00681BC4 /* Media.xcassets in Resources */,
 				7F343EC826507FCF002DC440 /* LaunchScreen.storyboard in Resources */,
 				D7B1C282269ED87A00F1C62D /* Localizable.strings in Resources */,
 				7F343EC526507FCF002DC440 /* Preview Assets.xcassets in Resources */,
@@ -780,6 +812,7 @@
 				D7B1C283269ED87A00F1C62D /* Localizable.strings in Resources */,
 				7F343ED6265080AC002DC440 /* Preview Assets.xcassets in Resources */,
 				D7AAA23726A025D500C2F987 /* response.json in Resources */,
+				D79B18FA2742329100681BC4 /* Media.xcassets in Resources */,
 				7F343ED7265080AC002DC440 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -806,6 +839,7 @@
 				D76DC23F271D136200396CE9 /* Localizable.strings in Resources */,
 				D76DC240271D136200396CE9 /* Preview Assets.xcassets in Resources */,
 				D76DC241271D136200396CE9 /* response.json in Resources */,
+				D79B18FB2742329100681BC4 /* Media.xcassets in Resources */,
 				D76DC242271D136200396CE9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1117,7 +1151,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.antran.scenarios.Sample.production;
-				PRODUCT_NAME = Scenarios;
+				PRODUCT_NAME = Production;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1139,7 +1173,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = app.antran.scenarios.Sample.production;
-				PRODUCT_NAME = Scenarios;
+				PRODUCT_NAME = Production;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
