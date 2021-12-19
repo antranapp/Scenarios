@@ -146,15 +146,15 @@ extension CollectionViewController {
         dataSource = UICollectionViewDiffableDataSource<ListSection, ListRow>(collectionView: collectionView) {
             // swiftlint:disable:next closure_parameter_position
             (collectionView: UICollectionView, indexPath: IndexPath, item: ListRow) -> UICollectionViewCell? in
-            if indexPath.item == 0 {
-                return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: indexPath, item: item)
-            } else {
-                if item.subRows.isEmpty {
-                    return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+                if indexPath.item == 0 {
+                    return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: indexPath, item: item)
                 } else {
-                    return collectionView.dequeueConfiguredReusableCell(using: containerCellRegistration, for: indexPath, item: item)
+                    if item.subRows.isEmpty {
+                        return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: item)
+                    } else {
+                        return collectionView.dequeueConfiguredReusableCell(using: containerCellRegistration, for: indexPath, item: item)
+                    }
                 }
-            }
         }
     }
     

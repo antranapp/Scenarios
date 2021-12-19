@@ -1,3 +1,6 @@
+//
+// Copyright © 2021 An Tran. All rights reserved.
+//
 
 import Combine
 import UIKit
@@ -8,17 +11,18 @@ open class ScenariosManager: BaseScenariosManager {
     private var cancellables = Set<AnyCancellable>()
     @Published private var favouriteScenarios: [ScenarioId]
     
-    public override init(
+    override public init(
         targetAudience: Audience? = nil,
         plugins: [ScenarioPlugin] = []
     ) {
         favouriteScenarios = UserDefaults.standard.object(
             for: ScenariosManager.favouriteScenarioDefaultKey,
-               defaultValue: [ScenarioId]()
+            defaultValue: [ScenarioId]()
         )
         super.init(
             targetAudience: targetAudience,
-            plugins: plugins)
+            plugins: plugins
+        )
     }
     
     override func setupBindings() {

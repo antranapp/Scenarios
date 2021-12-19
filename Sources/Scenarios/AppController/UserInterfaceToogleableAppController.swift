@@ -28,12 +28,10 @@ public class UserInterfaceToogleableNavigationAppController: NavigationAppContro
 @available(iOS 13.0, *)
 class UserInterfaceToogleableNavigationController: ResetableRefreshableNavigationController {
 
-    private lazy var toggleInterfaceStyleButton: UIBarButtonItem = {
-        UIBarButtonItem(
-            image: UIImage(systemName: "sun.max"),
-            style: .plain, target: self, action: #selector(self.didToggleAppearanceMode)
-        )
-    }()
+    private lazy var toggleInterfaceStyleButton: UIBarButtonItem = .init(
+        image: UIImage(systemName: "sun.max"),
+        style: .plain, target: self, action: #selector(self.didToggleAppearanceMode)
+    )
 
     override init(
         hasResetButton: Bool = false,
