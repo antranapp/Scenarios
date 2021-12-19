@@ -71,7 +71,6 @@ open class BaseScenariosManager {
         self.targetAudience = targetAudience
         self.plugins = plugins
 
-
         self.plugins.forEach { $0.register() }
 
         updateShortcuts()

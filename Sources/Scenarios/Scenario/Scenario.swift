@@ -27,20 +27,19 @@ public struct ScenarioInfo {
     }
 }
 
-public protocol TestScenario: IdentifiableType {
+public protocol BaseScenario: IdentifiableType {
     static var name: String { get }
     static var nameForSorting: String { get }
     static var kind: ScenarioKind { get }
 }
 
-public extension TestScenario {
+public extension BaseScenario {
     static var nameForSorting: String {
         name
     }
 }
 
-public protocol Scenario: TestScenario {
-    static var id: String { get }
+public protocol Scenario: BaseScenario {
     static var rootViewProvider: RootViewProviding { get }
     static var shortDescription: String? { get }
     static var longDescription: String? { get }
