@@ -10,7 +10,13 @@ final class InternalAppDelegate: BaseAppDelegate {
 
     // MARK: Properties
 
-    private lazy var manager = ScenariosManager()
+    private lazy var manager: BaseScenariosManager = {
+        if #available(iOS 13, *) {
+            return ScenariosManager()
+        } else {
+            return BaseScenariosManager()
+        }
+    }()
 
     // MARK: APIs
 
