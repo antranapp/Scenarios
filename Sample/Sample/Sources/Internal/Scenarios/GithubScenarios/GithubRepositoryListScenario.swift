@@ -14,6 +14,8 @@ final class GithubRepositoryListScenario: Scenario {
     static var rootViewProvider: RootViewProviding {
         let service = GithubService()
         let githubView = RepositoryListView(viewModel: RepositoryListViewModel(githubService: service))
-        return BasicAppController(rootViewController: UIHostingController(rootView: githubView))
+        return NavigationAppController(withResetButton: true) { _ in
+            UIHostingController(rootView: githubView)
+        }
     }
 }

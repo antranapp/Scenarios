@@ -13,7 +13,9 @@ final class GithubRepositoryDetailScenario: Scenario {
     
     static var rootViewProvider: RootViewProviding {
         let detailView = RepositoryDetailView(repository: .alamofire)
-        return BasicAppController(rootViewController: UIHostingController(rootView: detailView))
+        return NavigationAppController(withResetButton: true) { _ in
+            UIHostingController(rootView: detailView)
+        }
     }
 }
 
