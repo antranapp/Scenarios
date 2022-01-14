@@ -10,7 +10,7 @@ jobs:
     name: Build and Test
 
     # See available software: https://github.com/actions/virtual-environments/blob/master/images/macos/macos-10.15-Readme.md
-    runs-on: macos-10.14
+    runs-on: macos-10.15
 
     steps:
       - name: Cancel Previous Runs
@@ -28,7 +28,7 @@ jobs:
           xcrun simctl list devices 12.4
 
       - name: Boot simulator
-        run: xcrun simctl boot "iPhone 8"
+        run: xcrun simctl boot "iPhone 5s"
 
       - name: Info
         run: |
@@ -37,6 +37,5 @@ jobs:
 
       - name: Build Internal tests iOS 12
         run: |
-          swift package generate-xcodeproj
-          xcodebuild clean build -project Scenarios.xcodeproj -scheme "Scenarios-Package" -destination "platform=iOS Simulator,name=iPhone 8,OS=12.4"
+          xcodebuild clean build -workspace Scenarios.xcworkspace -scheme "Sample-Internal-iOS11" -destination "platform=iOS Simulator,name=iPhone 5s,OS=12.4"
 

@@ -2,7 +2,9 @@
 // Copyright © 2021 An Tran. All rights reserved.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 import UIKit
 
 // swiftlint:disable type_name
