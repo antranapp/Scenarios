@@ -1,12 +1,9 @@
 //
-//  DashboardViewModel.swift
-//  Pexels-Production
-//
-//  Created by An Tran on 10/1/22.
+// Copyright © 2021 An Tran. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 final class DashboardViewModel: ObservableObject {
     

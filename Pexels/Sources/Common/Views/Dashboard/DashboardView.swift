@@ -33,7 +33,7 @@ struct DashboardView: View {
                     }
             }
         } else {
-            AuthenticationView() {
+            AuthenticationView {
                 configuration.authenticationService.login($0)
             }
         }
