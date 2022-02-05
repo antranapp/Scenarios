@@ -57,13 +57,26 @@ open class ScenariosManager: BaseScenariosManager {
             .store(in: &cancellables)
     }
     
-    override func updateContent() {
-        if let activeScenarioId = activeScenarioId {
-            appController.content = activeScenarioId.scenarioType.rootViewProvider
+    override func makeScenarioSelector() -> RootViewProviding {
+        var innerAppController: RootViewProviding
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if #available(iOS 14.0, *) {
+                innerAppController = ScenarioSelectorSplitAppController(
+                    targetAudience: targetAudience
+                ) { [weak self] id in
+                    self?.activeScenarioId = id
+                }
+            } else {
+                innerAppController = ScenarioSelectorAppController(
+                    targetAudience: targetAudience,
+                    favouriteScenarios: $favouriteScenarios.eraseToAnyPublisher(),
+                    layout: scenarioListLayout
+                ) { [weak self] id in
+                    self?.activeScenarioId = id
+                }
+            }
         } else {
-            appController.content?.rootViewController.remove()
-            appController.content = nil
-            appController.content = ScenarioSelectorAppController(
+            innerAppController = ScenarioSelectorAppController(
                 targetAudience: targetAudience,
                 favouriteScenarios: $favouriteScenarios.eraseToAnyPublisher(),
                 layout: scenarioListLayout
@@ -71,6 +84,8 @@ open class ScenariosManager: BaseScenariosManager {
                 self?.activeScenarioId = id
             }
         }
+        
+        return innerAppController
     }
     
     // MARK: Private helpers
