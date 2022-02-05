@@ -15,7 +15,7 @@ open class BaseScenariosManager {
     public static let disableAnimations = "disable_animations"
     public static let disableHardwareKeyboard = "disable_hardware_keyboard"
 
-    public let appController = ScenarioAppController()
+    let appController = ScenariosAppController()
 
     let targetAudience: Audience?
 
@@ -61,6 +61,8 @@ open class BaseScenariosManager {
 
     // Note: Hold onto the plugins to keep them in memory.
     private let plugins: [ScenarioPlugin]
+    
+    private var isInitialLaunch = true
 
     // MARK: Public APIs
 
@@ -77,6 +79,8 @@ open class BaseScenariosManager {
 
         setupBindings()
         updateContent()
+        
+        isInitialLaunch = false
     }
 
     public func append(shortcuts: [ApplicationShortcutItem]) {
@@ -128,9 +132,6 @@ open class BaseScenariosManager {
     }
 
     @objc public func reset() {
-        if (appController.content?.rootViewController.presentedViewController) != nil {
-            appController.content?.rootViewController.dismiss(animated: false, completion: nil)
-        }
         activeScenarioId = nil
     }
 
@@ -147,23 +148,24 @@ open class BaseScenariosManager {
 
     func updateContent() {
         if let activeScenarioId = activeScenarioId {
-            appController.content = activeScenarioId.scenarioType.rootViewProvider
-        } else {
-            appController.content?.rootViewController.remove()
-            appController.content = nil
-            appController.content = BaseScenarioSelectorAppController(
-                targetAudience: targetAudience
-            ) { [weak self] id in
-                self?.activeScenarioId = id
+            if isInitialLaunch {
+                appController.setScenarioSelector(makeScenarioSelector())
             }
+            appController.setScenario(activeScenarioId)
+        } else {
+            appController.setScenarioSelector(makeScenarioSelector())
+        }
+    }
+    
+    func makeScenarioSelector() -> RootViewProviding {
+        BaseScenarioSelectorAppController(
+            targetAudience: targetAudience
+        ) { [weak self] id in
+            self?.activeScenarioId = id
         }
     }
 
     @objc func refresh() {
-        if (appController.content?.rootViewController.presentedViewController) != nil {
-            appController.content?.rootViewController.dismiss(animated: false, completion: nil)
-        }
-
         let previsousScenarioId = activeScenarioId
         activeScenarioId = nil
 

@@ -4,15 +4,38 @@
 
 import UIKit
 
-public class ScenarioAppController: RootViewProviding {
-    public let rootViewController = UIViewController()
-
-    public var content: RootViewProviding? {
+final class ScenariosAppController: RootViewProviding {
+    let rootViewController = UIViewController()
+    
+    private var rootViewProvider: RootViewProviding? {
         didSet {
+            dismissToRootView()
             oldValue?.rootViewController.remove()
-            if let content = content {
+            if let content = rootViewProvider {
                 rootViewController.addFilling(content.rootViewController)
             }
+        }
+    }
+    
+    func setScenarioSelector(_ rootViewProvider: RootViewProviding) {
+        self.rootViewProvider = rootViewProvider
+    }
+    
+    func setScenario(_ id: ScenarioId) {
+        if #available(iOS 14.0, *) {
+            if let rootViewProvider = rootViewProvider as? ScenarioSelectorSplitAppController {
+                rootViewProvider.setScenario(id)
+            } else {
+                self.rootViewProvider = id.scenarioType.rootViewProvider
+            }
+        } else {
+            self.rootViewProvider = id.scenarioType.rootViewProvider
+        }
+    }
+    
+    private func dismissToRootView() {
+        if (rootViewProvider?.rootViewController.presentedViewController) != nil {
+            rootViewProvider?.rootViewController.dismiss(animated: false, completion: nil)
         }
     }
 }
