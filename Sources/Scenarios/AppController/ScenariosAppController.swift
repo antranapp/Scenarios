@@ -4,9 +4,8 @@
 
 import UIKit
 
-// TODO: This class should not be public
-public final class ScenariosAppController: RootViewProviding {
-    public let rootViewController = UIViewController()
+final class ScenariosAppController: RootViewProviding {
+    let rootViewController = UIViewController()
     
     private var rootViewProvider: RootViewProviding? {
         didSet {
