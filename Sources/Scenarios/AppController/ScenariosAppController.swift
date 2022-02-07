@@ -7,7 +7,7 @@ import UIKit
 public final class ScenariosAppController: RootViewProviding {
     public let rootViewController = UIViewController()
     
-    private var rootViewProvider: RootViewProviding? {
+    public var rootViewProvider: RootViewProviding? {
         didSet {
             dismissToRootView()
             oldValue?.rootViewController.remove()
