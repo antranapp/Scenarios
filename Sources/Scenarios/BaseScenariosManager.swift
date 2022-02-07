@@ -15,7 +15,7 @@ open class BaseScenariosManager {
     public static let disableAnimations = "disable_animations"
     public static let disableHardwareKeyboard = "disable_hardware_keyboard"
 
-    let appController = ScenariosAppController()
+    public let appController = ScenariosAppController()
 
     let targetAudience: Audience?
 
