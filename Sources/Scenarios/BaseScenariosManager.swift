@@ -153,6 +153,9 @@ open class BaseScenariosManager {
             }
             appController.setScenario(activeScenarioId)
         } else {
+            if (appController.rootViewController.presentedViewController) != nil {
+                appController.rootViewController.dismiss(animated: false, completion: nil)
+            }
             appController.setScenarioSelector(makeScenarioSelector())
         }
     }
