@@ -17,7 +17,7 @@ jobs:
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
       - name: Install swift_doc
         run: brew install swiftdocorg/formulae/swift-doc
