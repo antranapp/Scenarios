@@ -1,6 +1,6 @@
 # Scenarios
 
-A library supporting fast prototyping for iOS Projects.
+Scenarios provides an infrastructure for fast prototyping and feature development for iOS Projects without breaking production apps
 
 # Introduction
 

@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Inject",
+        "repositoryURL": "https://github.com/krzysztofzablocki/Inject",
+        "state": {
+          "branch": null,
+          "revision": "04925668f57e74bc40f21b185a41c5585a84a9fe",
+          "version": "1.2.2"
+        }
+      },
+      {
         "package": "SDWebImage",
         "repositoryURL": "https://github.com/SDWebImage/SDWebImage.git",
         "state": {
