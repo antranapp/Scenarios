@@ -168,13 +168,10 @@ open class BaseScenariosManager {
     }
 
     @objc func refresh() {
-        let previsousScenarioId = activeScenarioId
-        activeScenarioId = nil
+        let previousScenarioId = activeScenarioId
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            DispatchQueue.main.async {
-                self?.activeScenarioId = previsousScenarioId
-            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { 
+            self.activeScenarioId = previousScenarioId
         }
     }
 
