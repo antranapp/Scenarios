@@ -142,10 +142,9 @@ open class BaseScenariosManager {
     }
 
     func setupBindings() {
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(reset), name: .resetScenario, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reset), name: .resetScenario, object: nil)
     }
-
+    
     func updateContent() {
         if let activeScenarioId = activeScenarioId {
             if isInitialLaunch {
@@ -172,7 +171,7 @@ open class BaseScenariosManager {
         let previsousScenarioId = activeScenarioId
         activeScenarioId = nil
 
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             DispatchQueue.main.async {
                 self?.activeScenarioId = previsousScenarioId
             }
@@ -186,6 +185,10 @@ open class BaseScenariosManager {
         case .outlineList:
             scenarioListLayout = .nestedList
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
