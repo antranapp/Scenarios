@@ -64,7 +64,7 @@ open class ScenariosManager: BaseScenariosManager {
                 innerAppController = ScenarioSelectorSplitAppController(
                     targetAudience: targetAudience
                 ) { [weak self] id in
-                    self?.activeScenarioId = id
+                    self?.select(id)
                 }
             } else {
                 innerAppController = ScenarioSelectorAppController(
@@ -72,7 +72,7 @@ open class ScenariosManager: BaseScenariosManager {
                     favouriteScenarios: $favouriteScenarios.eraseToAnyPublisher(),
                     layout: scenarioListLayout
                 ) { [weak self] id in
-                    self?.activeScenarioId = id
+                    self?.select(id)
                 }
             }
         } else {
@@ -81,7 +81,7 @@ open class ScenariosManager: BaseScenariosManager {
                 favouriteScenarios: $favouriteScenarios.eraseToAnyPublisher(),
                 layout: scenarioListLayout
             ) { [weak self] id in
-                self?.activeScenarioId = id
+                self?.select(id)
             }
         }
         

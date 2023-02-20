@@ -132,7 +132,11 @@ open class BaseScenariosManager {
     }
 
     @objc public func reset() {
-        activeScenarioId = nil
+        select(nil)
+    }
+    
+    public func select(_ scenarioId: ScenarioId?) {
+        activeScenarioId = scenarioId
     }
 
     // MARK: Private helpers
@@ -163,7 +167,7 @@ open class BaseScenariosManager {
         BaseScenarioSelectorAppController(
             targetAudience: targetAudience
         ) { [weak self] id in
-            self?.activeScenarioId = id
+            self?.select(id)
         }
     }
 
@@ -171,7 +175,7 @@ open class BaseScenariosManager {
         let previousScenarioId = activeScenarioId
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { 
-            self.activeScenarioId = previousScenarioId
+            self.select(previousScenarioId)
         }
     }
 
