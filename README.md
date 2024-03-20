@@ -2,6 +2,12 @@
 
 Scenarios provides an infrastructure for fast prototyping and feature development for iOS Projects without breaking production apps
 
+# Video presentation
+
+[Watch the presentation about the framework at iOSConf 2022](https://www.youtube.com/watch?v=gbqC_67W_tg)
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/gbqC_67W_tg/0.jpg)](https://www.youtube.com/watch?v=gbqC_67W_tg)
+
 # Introduction
 
 ## Challenges of mobile frontend development
