@@ -27,7 +27,7 @@ jobs:
       #     xcrun simctl list devices 15.4
 
       - name: Boot simulator
-        run: xcrun simctl boot "iPhone 13 Pro"
+        run: xcrun simctl boot "iPhone 15 Pro"
 
       - name: Run Internal tests
         run: xcodebuild clean build test -workspace Scenarios.xcworkspace -scheme "Sample-Internal" -destination "platform=iOS Simulator,name=iPhone 13 Pro,OS=latest"
