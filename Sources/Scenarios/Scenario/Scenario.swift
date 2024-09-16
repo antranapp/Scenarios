@@ -5,6 +5,8 @@
 import ObjectiveC
 import UIKit
 
+@objc public protocol ScenarioMarker {}
+
 public protocol IdentifiableType: AnyObject {
     static var id: String { get }
 }
@@ -27,7 +29,7 @@ public struct ScenarioInfo {
     }
 }
 
-public protocol BaseScenario: IdentifiableType {
+public protocol BaseScenario: IdentifiableType, ScenarioMarker {
     static var name: String { get }
     static var nameForSorting: String { get }
     static var kind: ScenarioKind { get }
