@@ -6,6 +6,7 @@ import Foundation
 import ObjectiveC
 import SwiftUI
 
+// Highly inspried from https://github.com/zuhlke/Support
 public struct ScenarioId: CaseIterable, Hashable, Identifiable, RawRepresentable, Codable {
 
     public var scenarioType: Scenario.Type
@@ -43,17 +44,6 @@ public struct ScenarioId: CaseIterable, Hashable, Identifiable, RawRepresentable
     }()
 
     public static let _allCases: some Sequence<ScenarioId> = {
-//    public static let allCases: [ScenarioId] = {
-//        var count: UInt32 = 0
-//        let classes = objc_copyClassList(&count)
-//        let buffer = UnsafeBufferPointer(start: classes, count: Int(count))
-//        return Array(
-//            (0 ..< Int(count))
-//                .lazy
-//                .compactMap { buffer[$0] as? Scenario.Type }
-//                .map { ScenarioId(withType: $0) }
-//        )
-//        .sorted { $0.scenarioType.name < $1.scenarioType.name }
         // AnyClass.init seems to register new objective-C class the first time it is called.
         //
         // In order for the count variable to reserve enough capacity, we call this method once
