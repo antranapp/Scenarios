@@ -9,20 +9,24 @@ import UIKit
 open class ScenariosManager: BaseScenariosManager {
     
     private var cancellables = Set<AnyCancellable>()
-    @Published private var favouriteScenarios: [ScenarioId]
+    @Published private var favouriteScenarios: [ScenarioId] = []
+    
+    @UserDefault(SettingsKey.favouriteScenarioDefaultKey, defaultValue: [ScenarioId]())
+    private var defaultFavouriteScenarios: [ScenarioId]
     
     override public init(
         targetAudience: Audience? = nil,
         plugins: [ScenarioPlugin] = []
     ) {
-        favouriteScenarios = UserDefaults.standard.object(
-            for: SettingsKey.favouriteScenarioDefaultKey,
-            defaultValue: [ScenarioId]()
-        )
         super.init(
             targetAudience: targetAudience,
             plugins: plugins
         )
+        
+        favouriteScenarios = defaultFavouriteScenarios
+        
+        print(favouriteScenarios)
+        print("DEBUG")
     }
     
     override func setupBindings() {
@@ -96,5 +100,10 @@ open class ScenariosManager: BaseScenariosManager {
         } else {
             favouriteScenarios.append(scenarioId)
         }
+        
+        defaultFavouriteScenarios = favouriteScenarios
+        
+        print(defaultFavouriteScenarios)
+        print("DEBUG")
     }
 }

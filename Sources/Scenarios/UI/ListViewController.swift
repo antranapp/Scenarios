@@ -123,8 +123,7 @@ class ListViewController: UITableViewController {
             self.present(settingsViewController, animated: true, completion: nil)
         }
 
-        let actionDebugWindow = UIAction(title: "Debug Window", image: UIImage(systemName: "gear")) { [weak scenariosMovableWindow] _ in
-//            ScenariosFloatingWindow.sharedInstance().isHidden = false
+        let actionDebugWindow = UIAction(title: "Favourites Shortcuts", image: UIImage(systemName: "menubar.rectangle")) { [weak scenariosMovableWindow] _ in
             scenariosMovableWindow?.isHidden = false
         }
 

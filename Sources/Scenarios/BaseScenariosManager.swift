@@ -26,11 +26,6 @@ open class BaseScenariosManager {
 
     let targetAudience: Audience?
 
-    @UserDefault(SettingsKey.favouriteScenarioDefaultKey, defaultValue: [ScenarioId]())
-    private var defaultFavouriteScenarios: [ScenarioId]
-
-//    @UserDefault(SettingsKey.storeActiveScenario, defaultValue: false)
-//    private var shouldStoreActiveScenario: Bool
     @AppStorage(SettingsKey.storeActiveScenario) private var shouldStoreActiveScenario: Bool = false
 
     var activeScenarioId: ScenarioId? {
