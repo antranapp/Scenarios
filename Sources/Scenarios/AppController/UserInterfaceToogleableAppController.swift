@@ -8,7 +8,6 @@ import SwiftUI
 import UIKit
 
 // swiftlint:disable type_name
-@available(iOS 13.0, *)
 public class UserInterfaceToogleableNavigationAppController: NavigationAppController {
 
     public init(
@@ -27,7 +26,6 @@ public class UserInterfaceToogleableNavigationAppController: NavigationAppContro
     }
 }
 
-@available(iOS 13.0, *)
 class UserInterfaceToogleableNavigationController: ResetableRefreshableNavigationController {
 
     private lazy var toggleInterfaceStyleButton: UIBarButtonItem = .init(
@@ -100,7 +98,6 @@ public extension Reloadable where Self: Taggable {
 
 public typealias ReloadableViewController = Reloadable & UIViewController
 
-@available(iOS 13.0, *)
 public final class ReloadableHostingViewController<Content: View & Reloadable>: UIHostingController<Content>, Reloadable {
     
     public func reload() {

@@ -20,7 +20,7 @@ class BaseScenarioSelectorAppController: BaseSectionManager, RootViewProviding {
             }
         }
     }
-    
+        
     // MARK: Initilizer
     
     override init(
@@ -43,7 +43,9 @@ class BaseScenarioSelectorAppController: BaseSectionManager, RootViewProviding {
      // MARK: Private helpers
     
     override func onDidSetSections(_ sections: [ListSection]) {
-        content = makeScenarioViewController(with: sections)
+        content = makeScenarioViewController(
+            with: sections
+        )
     }
 
     override func showInfo(_ info: ScenarioInfo) {

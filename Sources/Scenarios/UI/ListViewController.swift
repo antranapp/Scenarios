@@ -67,15 +67,21 @@ class ListViewController: UITableViewController {
     private let sections: [ListSection]
     
     private var filteredRows = [ListRow]()
+    private let customViewController: UIViewController?
     
-    private lazy var scenariosMovableWindow: ScenariosMovableWindow = {
-        let window = ScenariosMovableWindow(maximizedViewController: FavouritesScenariosViewController(), minimizedViewImageColor: .red)
+    private lazy var scenariosMovableWindow: ScenariosMovableWindow? = {
+        guard let customViewController else {
+            return nil
+        }
+        
+        let window = ScenariosMovableWindow(maximizedViewController: customViewController, minimizedViewImageColor: .red)
         window.isHidden = true
         return window
     }()
 
-    init(title: String, sections: [ListSection]) {
+    init(title: String, sections: [ListSection], customViewController: UIViewController? = nil) {
         self.sections = sections
+        self.customViewController = customViewController
         super.init(style: .grouped)
         self.title = title
     }
@@ -91,16 +97,6 @@ class ListViewController: UITableViewController {
         tableView.register(DetailTableViewCell.self, forCellReuseIdentifier: cellReuseId)
         
         prepreSearchController()
-        
-//        if #available(iOS 13.0, *) {
-//            let switchLayoutButton = UIBarButtonItem(
-//                image: UIImage(systemName: "list.bullet"),
-//                style: .plain,
-//                target: self,
-//                action: #selector(didSwitchLayout)
-//            )
-//            navigationItem.rightBarButtonItem = switchLayoutButton
-//        }
         let menuButton = UIBarButtonItem(
             title: "Menu",
             image: UIImage(systemName: "ellipsis.circle"),
@@ -193,8 +189,15 @@ class ListViewController: UITableViewController {
         if currentRow.subRows.isEmpty {
             row(at: indexPath).action()
         } else {
-            let childSections = ListSection(title: currentRow.title, rows: currentRow.subRows)
-            let childListViewController = ListViewController(title: currentRow.title, sections: [childSections])
+            let childSections = ListSection(
+                title: currentRow.title,
+                rows: currentRow.subRows
+            )
+            let childListViewController = ListViewController(
+                title: currentRow.title,
+                sections: [childSections],
+                customViewController: customViewController
+            )
             navigationController?.pushViewController(childListViewController, animated: true)
         }
     }

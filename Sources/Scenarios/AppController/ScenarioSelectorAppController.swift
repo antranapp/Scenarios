@@ -2,20 +2,23 @@
 // Copyright © 2021 An Tran. All rights reserved.
 //
 
-#if canImport(Combine)
 import Combine
-#endif
 import Foundation
+import UIKit
 
-@available(iOS 13.0, *)
 final class ScenarioSelectorAppController: BaseScenarioSelectorAppController {
 
     private var cancellables = Set<AnyCancellable>()
-    private var favouriteScenarios: AnyPublisher<[ScenarioId], Never>?
+    private var favouriteScenarios: CurrentValueSubject<[ScenarioId], Never>?
+
+    private lazy var customViewController: UIViewController? = {
+        guard let favouriteScenarios else { return nil }
+        return FavouritesScenariosViewController(scenarioIds: favouriteScenarios)
+    }()
 
     init(
         targetAudience: Audience?,
-        favouriteScenarios: AnyPublisher<[ScenarioId], Never>?,
+        favouriteScenarios: CurrentValueSubject<[ScenarioId], Never>?,
         layout: ScenarioListLayout,
         select: @escaping (ScenarioId) -> Void
     ) {
@@ -34,4 +37,11 @@ final class ScenarioSelectorAppController: BaseScenarioSelectorAppController {
             .store(in: &cancellables)
     }
 
+    override func makeScenarioViewController(with sections: [ListSection]) -> UIViewController {
+        return ScenarioSeletorNestedListViewController(
+            title: "Scenarios",
+            sections: sections,
+            customViewController: customViewController
+        )
+    }
 }

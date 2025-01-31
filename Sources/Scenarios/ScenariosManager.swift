@@ -5,11 +5,10 @@
 import Combine
 import UIKit
 
-@available(iOS 13.0, *)
 open class ScenariosManager: BaseScenariosManager {
     
     private var cancellables = Set<AnyCancellable>()
-    @Published private var favouriteScenarios: [ScenarioId] = []
+    private var favouriteScenarios = CurrentValueSubject<[ScenarioId], Never>([])
     
     @UserDefault(SettingsKey.favouriteScenarioDefaultKey, defaultValue: [ScenarioId]())
     private var defaultFavouriteScenarios: [ScenarioId]
@@ -23,10 +22,7 @@ open class ScenariosManager: BaseScenariosManager {
             plugins: plugins
         )
         
-        favouriteScenarios = defaultFavouriteScenarios
-        
-        print(favouriteScenarios)
-        print("DEBUG")
+        favouriteScenarios.value = defaultFavouriteScenarios
     }
     
     override func setupBindings() {
@@ -37,6 +33,7 @@ open class ScenariosManager: BaseScenariosManager {
                 self.reset()
             }
             .store(in: &cancellables)
+        
         notificationCenter
             .publisher(for: .refreshScenario)
             .sink { _ in
@@ -59,6 +56,15 @@ open class ScenariosManager: BaseScenariosManager {
                 }
             }
             .store(in: &cancellables)
+
+        notificationCenter
+            .publisher(for: .selectScenario)
+            .sink { notification in
+                if let scenarioId = notification.object as? ScenarioId {
+                    self.select(scenarioId)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     override func makeScenarioSelector() -> RootViewProviding {
@@ -73,7 +79,7 @@ open class ScenariosManager: BaseScenariosManager {
             } else {
                 innerAppController = ScenarioSelectorAppController(
                     targetAudience: targetAudience,
-                    favouriteScenarios: $favouriteScenarios.eraseToAnyPublisher(),
+                    favouriteScenarios: favouriteScenarios,
                     layout: scenarioListLayout
                 ) { [weak self] id in
                     self?.select(id)
@@ -82,7 +88,7 @@ open class ScenariosManager: BaseScenariosManager {
         } else {
             innerAppController = ScenarioSelectorAppController(
                 targetAudience: targetAudience,
-                favouriteScenarios: $favouriteScenarios.eraseToAnyPublisher(),
+                favouriteScenarios: favouriteScenarios,
                 layout: scenarioListLayout
             ) { [weak self] id in
                 self?.select(id)
@@ -95,15 +101,12 @@ open class ScenariosManager: BaseScenariosManager {
     // MARK: Private helpers
     
     private func toggleFavourite(_ scenarioId: ScenarioId) {
-        if let index = favouriteScenarios.firstIndex(of: scenarioId) {
-            favouriteScenarios.remove(at: index)
+        if let index = favouriteScenarios.value.firstIndex(of: scenarioId) {
+            favouriteScenarios.value.remove(at: index)
         } else {
-            favouriteScenarios.append(scenarioId)
+            favouriteScenarios.value.append(scenarioId)
         }
         
-        defaultFavouriteScenarios = favouriteScenarios
-        
-        print(defaultFavouriteScenarios)
-        print("DEBUG")
+        defaultFavouriteScenarios = favouriteScenarios.value
     }
 }

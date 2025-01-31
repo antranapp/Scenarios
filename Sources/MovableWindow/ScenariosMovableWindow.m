@@ -126,7 +126,7 @@
             [blurView.trailingAnchor constraintEqualToAnchor:view.trailingAnchor]
         ]];
 
-        UIImage *image = [UIImage systemImageNamed:@"eye"];
+        UIImage *image = [UIImage systemImageNamed:@"menubar.rectangle"];
         image = [image imageWithTintColor:imageColor ?: UIColor.yellowColor];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
         imageView.userInteractionEnabled = true;

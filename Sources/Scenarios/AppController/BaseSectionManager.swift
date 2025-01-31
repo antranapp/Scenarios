@@ -30,13 +30,15 @@ class BaseSectionManager {
         let viewController: UIViewController
         switch layout {
         case .nestedList:
-            viewController = ScenarioSeletorNestedListViewController(title: "Scenarios", sections: sections)
+            viewController = ScenarioSeletorNestedListViewController(
+                title: "Scenarios",
+                sections: sections
+            )
         case .outlineList:
-            if #available(iOS 14, *) {
-                viewController = ScenarioSeletorOutlineListViewController(title: "Scenarios", sections: sections)
-            } else {
-                viewController = ScenarioSeletorNestedListViewController(title: "Scenarios", sections: sections)
-            }
+            viewController = ScenarioSeletorOutlineListViewController(
+                title: "Scenarios",
+                sections: sections
+            )
         }
         return viewController
     }
@@ -127,7 +129,6 @@ class BaseSectionManager {
 
 final class ScenarioSeletorNestedListViewController: ListViewController {}
 
-@available(iOS 14, *)
 final class ScenarioSeletorOutlineListViewController: CollectionViewController {}
 
 private extension ListSection {
@@ -203,7 +204,6 @@ private extension ListRow {
     }
 }
 
-@available(iOS 13.0, *)
 extension ListViewController {
     
     private func toggleFavourite(_ scenarioId: ScenarioId, isPinning: Bool = true) {

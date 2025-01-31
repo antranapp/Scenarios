@@ -6,7 +6,6 @@ import Combine
 import Foundation
 import UIKit
 
-@available(iOS 13.0, *)
 public class FeatureContext<Configuration, Output> {
     let configurations: [Configuration]
     var selectedConfiguration: Configuration?

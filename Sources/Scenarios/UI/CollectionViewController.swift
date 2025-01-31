@@ -4,7 +4,6 @@
 
 import UIKit
 
-@available(iOS 14, *)
 class CollectionViewController: UIViewController {
         
     private var dataSource: UICollectionViewDiffableDataSource<ListSection, ListRow>!
@@ -77,7 +76,6 @@ class CollectionViewController: UIViewController {
 
 }
 
-@available(iOS 14, *)
 extension CollectionViewController {
 
     private func createLayout() -> UICollectionViewLayout {
@@ -89,7 +87,6 @@ extension CollectionViewController {
     }
 }
 
-@available(iOS 14, *)
 extension CollectionViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -99,7 +96,6 @@ extension CollectionViewController: UICollectionViewDelegate {
     }
 }
 
-@available(iOS 14, *)
 extension CollectionViewController {
     
     private func configureCollectionView() {
@@ -189,7 +185,6 @@ extension CollectionViewController {
     }
 }
 
-@available(iOS 14, *)
 extension CollectionViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else {
@@ -224,7 +219,6 @@ extension CollectionViewController: UISearchResultsUpdating {
     }
 }
 
-@available(iOS 14, *)
 extension NSDiffableDataSourceSectionSnapshot {
     mutating func add(rows: [ItemIdentifierType], to root: ItemIdentifierType) where ItemIdentifierType == ListRow {
         append(rows, to: root)
@@ -234,7 +228,6 @@ extension NSDiffableDataSourceSectionSnapshot {
     }
 }
 
-@available(iOS 14, *)
 private extension Array where Element == ListRow {
     func flatten() -> [Element] {
         var result = [Element]()
