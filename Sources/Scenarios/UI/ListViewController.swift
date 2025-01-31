@@ -67,6 +67,12 @@ class ListViewController: UITableViewController {
     private let sections: [ListSection]
     
     private var filteredRows = [ListRow]()
+    
+    private lazy var scenariosMovableWindow: ScenariosMovableWindow = {
+        let window = ScenariosMovableWindow(maximizedViewController: FavouritesScenariosViewController(), minimizedViewImageColor: .red)
+        window.isHidden = true
+        return window
+    }()
 
     init(title: String, sections: [ListSection]) {
         self.sections = sections
@@ -117,8 +123,9 @@ class ListViewController: UITableViewController {
             self.present(settingsViewController, animated: true, completion: nil)
         }
 
-        let actionDebugWindow = UIAction(title: "Debug Window", image: UIImage(systemName: "gear")) { _ in
-            ScenariosFloatingWindow.sharedInstance().isHidden = false
+        let actionDebugWindow = UIAction(title: "Debug Window", image: UIImage(systemName: "gear")) { [weak scenariosMovableWindow] _ in
+//            ScenariosFloatingWindow.sharedInstance().isHidden = false
+            scenariosMovableWindow?.isHidden = false
         }
 
         return UIMenu(title: "", children: [actionSettings, actionDebugWindow])
