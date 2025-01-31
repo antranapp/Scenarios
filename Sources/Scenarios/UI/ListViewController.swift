@@ -3,6 +3,7 @@
 //
 
 import UIKit
+import MovableWindow
 
 struct ListRow: Hashable {
     private var identifier = UUID()
@@ -115,8 +116,12 @@ class ListViewController: UITableViewController {
             settingsViewController.modalPresentationStyle = .fullScreen
             self.present(settingsViewController, animated: true, completion: nil)
         }
-        
-        return UIMenu(title: "", children: [actionSettings])
+
+        let actionDebugWindow = UIAction(title: "Debug Window", image: UIImage(systemName: "gear")) { _ in
+            ScenariosFloatingWindow.sharedInstance().isHidden = false
+        }
+
+        return UIMenu(title: "", children: [actionSettings, actionDebugWindow])
     }
     
     @objc private func didSwitchLayout() {

@@ -5,17 +5,15 @@
 //  Created by Tran Binh An on 31/1/25.
 //
 
-#import "PDDebugWindow.h"
-//#import "PDAnalyticsListVC.h"
-//#import "PDAnalyticsVC.h"
+#import "ScenariosFloatingWindow.h"
 #import <UIKit/UIKit.h>
 
-NSString * const DebugWindowOpenKey = @"DebugWindowOpenKey";
+NSString * const FloatingWindowOpenKey = @"Scenarios.FloatingWindowOpenKey";
 
-@implementation PDDebugWindow
+@implementation ScenariosFloatingWindow
 + (instancetype)sharedInstance {
     static dispatch_once_t onceToken;
-    static PDDebugWindow *window = nil;
+    static ScenariosFloatingWindow *window = nil;
     dispatch_once(&onceToken, ^{
         window = [[self alloc] initWithMaximizedViewController:UIViewController.new minimizedViewImageColor:UIColor.yellowColor];
     });
@@ -25,7 +23,7 @@ NSString * const DebugWindowOpenKey = @"DebugWindowOpenKey";
 
 - (void)setHidden:(BOOL)hidden {
     [super setHidden:hidden];
-    [NSUserDefaults.standardUserDefaults setBool:!hidden forKey:DebugWindowOpenKey];
+    [NSUserDefaults.standardUserDefaults setBool:!hidden forKey:FloatingWindowOpenKey];
 }
 @end
 

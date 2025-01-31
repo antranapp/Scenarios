@@ -4,6 +4,7 @@
 
 import UIKit
 import SwiftUI
+import MovableWindow
 
 enum SettingsKey {
     public static let activeScenarioDefaultKey = "Scenarios.activeScenario"

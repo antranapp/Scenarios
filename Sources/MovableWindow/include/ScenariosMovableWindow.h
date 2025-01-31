@@ -10,11 +10,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface PDMovableWindow : UIWindow
+@interface ScenariosMovableWindow : UIWindow
 @property(nonatomic, assign) BOOL minimized;
 @property(nonatomic, readonly) UIView *displayView;
 
-- (instancetype)initWithMaximizedViewController:(UIViewController *)vc minimizedViewImageColor:(UIColor *)minimizedViewImageColor;
+- (instancetype)initWithMaximizedViewController:(nullable UIViewController *)vc minimizedViewImageColor:(UIColor *)minimizedViewImageColor;
 
 - (void)reload;
 

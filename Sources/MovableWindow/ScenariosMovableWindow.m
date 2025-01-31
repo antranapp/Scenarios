@@ -5,7 +5,7 @@
 //  Created by Tran Binh An on 31/1/25.
 //
 
-#import "PDMovableWindow.h"
+#import "ScenariosMovableWindow.h"
 
 #define PDScreenWidth  [UIScreen mainScreen].bounds.size.width
 #define PDScreenHeight  [UIScreen mainScreen].bounds.size.height
@@ -15,19 +15,19 @@
 #define PDBottom 200
 #define PDAnimationDuration 0.15
 
-@interface PDMovableWindow ()
+@interface ScenariosMovableWindow ()
 @property(nonatomic, strong) UIView *displayView;
 @property(nonatomic, strong, nullable)UIView *minimizedView;  // default nil
 @property(nonatomic, strong, nullable)UIViewController *maximizedViewController;  // default nil
 @end
 
-@implementation PDMovableWindow {
+@implementation ScenariosMovableWindow {
     UIPanGestureRecognizer *_panGesture;
 }
 
 #pragma mark - init
 
-- (instancetype)initWithMaximizedViewController:(UIViewController *)vc minimizedViewImageColor:(UIColor *)minimizedViewImageColor {
+- (instancetype)initWithMaximizedViewController:(nullable UIViewController *)vc minimizedViewImageColor:(UIColor *)minimizedViewImageColor {
     self = [super initWithFrame:CGRectMake(PDScreenWidth, 0, 0, 0)];
     if (self) {
         self.maximizedViewController = vc;
@@ -49,7 +49,6 @@
     }
     return self;
 }
-
 
 - (instancetype)initWithFrame:(CGRect)frame {
     return [self initWithMaximizedViewController:nil minimizedViewImageColor:nil];
