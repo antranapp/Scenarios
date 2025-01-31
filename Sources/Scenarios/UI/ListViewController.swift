@@ -85,19 +85,42 @@ class ListViewController: UITableViewController {
         
         prepreSearchController()
         
-        if #available(iOS 13.0, *) {
-            let switchLayoutButton = UIBarButtonItem(
-                image: UIImage(systemName: "list.bullet"),
-                style: .plain,
-                target: self,
-                action: #selector(didSwitchLayout)
-            )
-            navigationItem.rightBarButtonItem = switchLayoutButton
-        }
+//        if #available(iOS 13.0, *) {
+//            let switchLayoutButton = UIBarButtonItem(
+//                image: UIImage(systemName: "list.bullet"),
+//                style: .plain,
+//                target: self,
+//                action: #selector(didSwitchLayout)
+//            )
+//            navigationItem.rightBarButtonItem = switchLayoutButton
+//        }
+        let menuButton = UIBarButtonItem(
+            title: "Menu",
+            image: UIImage(systemName: "ellipsis.circle"),
+            primaryAction: nil,
+            menu: createMenu()
+        )
+        navigationItem.rightBarButtonItem = menuButton
     }
     
     func scenarioId(at indexPath: IndexPath) -> ScenarioId? {
         return sections[indexPath.section].rows[indexPath.row].scenarioId
+    }
+    
+    // MARK: Private helpers
+    
+    private func createMenu() -> UIMenu {
+        let action1 = UIAction(title: "Item 1", image: UIImage(systemName: "1.circle")) { _ in
+            let settingsViewController = ScenarioSettingsViewController()
+            settingsViewController.modalPresentationStyle = .fullScreen
+            self.present(settingsViewController, animated: true, completion: nil)
+        }
+        
+        let action2 = UIAction(title: "Item 2", image: UIImage(systemName: "2.circle")) { _ in
+            print("Item 2 selected")
+        }
+        
+        return UIMenu(title: "", children: [action1, action2])
     }
     
     @objc private func didSwitchLayout() {

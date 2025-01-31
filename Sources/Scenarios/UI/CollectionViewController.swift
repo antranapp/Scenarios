@@ -40,13 +40,13 @@ class CollectionViewController: UIViewController {
         
         loadData(sections: sections)
         
-        let switchLayoutButton = UIBarButtonItem(
-            image: UIImage(systemName: "list.bullet"),
-            style: .plain,
-            target: self,
-            action: #selector(didSwitchLayout)
+        let menuButton = UIBarButtonItem(
+            title: "Menu",
+            image: UIImage(systemName: "ellipsis.circle"),
+            primaryAction: nil,
+            menu: createMenu()
         )
-        navigationItem.rightBarButtonItem = switchLayoutButton
+        navigationItem.rightBarButtonItem = menuButton
     }
     
     @objc private func didSwitchLayout() {
@@ -61,6 +61,18 @@ class CollectionViewController: UIViewController {
         searchController.searchBar.placeholder = "Search Scenarios"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+    }
+    
+    private func createMenu() -> UIMenu {
+        let action1 = UIAction(title: "Item 1", image: UIImage(systemName: "1.circle")) { _ in
+            print("Item 1 selected")
+        }
+        
+        let action2 = UIAction(title: "Item 2", image: UIImage(systemName: "2.circle")) { _ in
+            print("Item 2 selected")
+        }
+        
+        return UIMenu(title: "", children: [action1, action2])
     }
 
 }

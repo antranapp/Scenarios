@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "Scenarios",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v14),
     ],
     products: [
         .library(
@@ -16,6 +16,12 @@ let package = Package(
     targets: [
         .target(
             name: "Scenarios",
+            dependencies: [
+                "MovableWindow",
+            ]
+        ),
+        .target(
+            name: "MovableWindow",
             dependencies: []
         ),
         .testTarget(

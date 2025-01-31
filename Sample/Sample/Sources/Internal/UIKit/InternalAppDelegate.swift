@@ -32,6 +32,8 @@ final class InternalAppDelegate: BaseAppDelegate {
             manager.prepare(window!)
         }
         
+//        FloatingMenuWindow.shared.isHidden = false
+        
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
