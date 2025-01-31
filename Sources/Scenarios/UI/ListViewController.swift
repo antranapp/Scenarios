@@ -110,17 +110,13 @@ class ListViewController: UITableViewController {
     // MARK: Private helpers
     
     private func createMenu() -> UIMenu {
-        let action1 = UIAction(title: "Item 1", image: UIImage(systemName: "1.circle")) { _ in
+        let actionSettings = UIAction(title: "Settings", image: UIImage(systemName: "gear")) { _ in
             let settingsViewController = ScenarioSettingsViewController()
             settingsViewController.modalPresentationStyle = .fullScreen
             self.present(settingsViewController, animated: true, completion: nil)
         }
         
-        let action2 = UIAction(title: "Item 2", image: UIImage(systemName: "2.circle")) { _ in
-            print("Item 2 selected")
-        }
-        
-        return UIMenu(title: "", children: [action1, action2])
+        return UIMenu(title: "", children: [actionSettings])
     }
     
     @objc private func didSwitchLayout() {

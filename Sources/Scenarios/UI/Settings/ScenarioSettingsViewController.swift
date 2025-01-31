@@ -10,22 +10,28 @@ import SwiftUI
 import UIKit
 
 struct ScenarioSettingsView: View {
-    @AppStorage("Scenarios.storeLastSelectedScenario") private var storeLastSelectedScenario: Bool = false
+    @AppStorage(SettingsKey.storeActiveScenario) private var shouldStoreActiveScenario: Bool = false
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
             Form {
-                Toggle(isOn: $storeLastSelectedScenario) {
+                Toggle(isOn: $shouldStoreActiveScenario) {
                     Text("Persist the selected Scenario")
                 }
-            }
-            .navigationTitle("Settings")
-            .navigationBarItems(trailing: Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                Image(systemName: "xmark")
-            })
+                .onChange(of: shouldStoreActiveScenario) { newValue in
+                    if !newValue {
+                        UserDefaults.standard.removeObject(forKey: SettingsKey.activeScenarioDefaultKey)
+                    }
+                }
+                }
+                .navigationTitle("Settings")
+                .navigationBarItems(trailing: Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image(systemName: "xmark")
+                    }
+                )
         }
     }
 }

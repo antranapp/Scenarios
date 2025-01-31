@@ -3,33 +3,48 @@
 //
 
 import UIKit
+import SwiftUI
+
+enum SettingsKey {
+    public static let activeScenarioDefaultKey = "Scenarios.activeScenario"
+    public static let favouriteScenarioDefaultKey = "Scenarios.favouriteScenarios"
+    public static let scenarioListLayoutDefaultKey = "Scenarios.scenarioListLayout"
+    public static let interfaceStyleDefaultKey = "Scenarios.interfaceStyle"
+    public static let disableAnimations = "Scenarios.disable_animations"
+    public static let disableHardwareKeyboard = "Scenarios.disable_hardware_keyboard"
+    
+    public static let storeActiveScenario = "Scenarios.storeActiveScenario"
+    
+}
 
 open class BaseScenariosManager {
 
     // MARK: Properties
 
-    public static let activeScenarioDefaultKey = "activeScenario"
-    public static let favouriteScenarioDefaultKey = "favouriteScenarios"
-    public static let scenarioListLayoutDefaultKey = "scenarioListLayout"
-    public static let interfaceStyleDefaultKey = "interfaceStyle"
-    public static let disableAnimations = "disable_animations"
-    public static let disableHardwareKeyboard = "disable_hardware_keyboard"
-
     public let appController = ScenariosAppController()
 
     let targetAudience: Audience?
 
-    @UserDefault(BaseScenariosManager.favouriteScenarioDefaultKey, defaultValue: [ScenarioId]())
+    @UserDefault(SettingsKey.favouriteScenarioDefaultKey, defaultValue: [ScenarioId]())
     private var defaultFavouriteScenarios: [ScenarioId]
 
-    @UserDefault(BaseScenariosManager.activeScenarioDefaultKey)
+//    @UserDefault(SettingsKey.storeActiveScenario, defaultValue: false)
+//    private var shouldStoreActiveScenario: Bool
+    @AppStorage(SettingsKey.storeActiveScenario) private var shouldStoreActiveScenario: Bool = false
+
     var activeScenarioId: ScenarioId? {
         didSet {
+            if shouldStoreActiveScenario {
+                storedActiveScenarioId = activeScenarioId
+            }
             updateContent()
         }
     }
 
-    @UserDefault(BaseScenariosManager.scenarioListLayoutDefaultKey, defaultValue: .nestedList)
+    @UserDefault(SettingsKey.activeScenarioDefaultKey)
+    var storedActiveScenarioId: ScenarioId?
+
+    @UserDefault(SettingsKey.scenarioListLayoutDefaultKey, defaultValue: .nestedList)
     var scenarioListLayout: ScenarioListLayout {
         didSet {
             updateContent()
@@ -74,7 +89,9 @@ open class BaseScenariosManager {
         self.plugins = plugins
 
         self.plugins.forEach { $0.register() }
-
+        
+        activeScenarioId = storedActiveScenarioId
+        
         updateShortcuts()
 
         setupBindings()
@@ -90,14 +107,14 @@ open class BaseScenariosManager {
 
     public func prepare(_ window: UIWindow) {
         window.accessibilityLabel = "MainWindow"
-        if let disableAnimations = Int(ProcessInfo.processInfo.environment[Self.disableAnimations] ?? ""),
+        if let disableAnimations = Int(ProcessInfo.processInfo.environment[SettingsKey.disableAnimations] ?? ""),
            disableAnimations > 0
         {
             UIView.setAnimationsEnabled(false)
             window.layer.speed = 2000
         }
 
-        if let disableHardwareKeyboard = Int(ProcessInfo.processInfo.environment[Self.disableHardwareKeyboard] ?? ""),
+        if let disableHardwareKeyboard = Int(ProcessInfo.processInfo.environment[SettingsKey.disableHardwareKeyboard] ?? ""),
            disableHardwareKeyboard > 0
         {
             // From https://stackoverflow.com/a/57618331
@@ -108,7 +125,7 @@ open class BaseScenariosManager {
         }
 
         if #available(iOS 13.0, *) {
-            switch UserDefaults.standard.string(forKey: Self.interfaceStyleDefaultKey) {
+            switch UserDefaults.standard.string(forKey: SettingsKey.interfaceStyleDefaultKey) {
             case "dark":
                 window.overrideUserInterfaceStyle = .dark
             case "light":

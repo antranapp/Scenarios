@@ -16,7 +16,7 @@ open class ScenariosManager: BaseScenariosManager {
         plugins: [ScenarioPlugin] = []
     ) {
         favouriteScenarios = UserDefaults.standard.object(
-            for: ScenariosManager.favouriteScenarioDefaultKey,
+            for: SettingsKey.favouriteScenarioDefaultKey,
             defaultValue: [ScenarioId]()
         )
         super.init(
